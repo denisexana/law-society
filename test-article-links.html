@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Article Links Test - Surrey Students' Law Society</title>
+    <meta charset="utf-8" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .event-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            background: #f9f9f9;
+        }
+        .event-link {
+            color: #d32f2f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .event-link:hover {
+            text-decoration: underline;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .test-button {
+            background: #1a237e;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0d47a1;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Article Links Test</h1>
+    <p>This page tests whether your article links are working correctly.</p>
+
+    <div class="test-section">
+        <h2>Test 1: Check Content.json Structure</h2>
+        <button class="test-button" onclick="testContentStructure()">Test Content Structure</button>
+        <div id="structureResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: Verify Article Links</h2>
+        <button class="test-button" onclick="testArticleLinks()">Test Article Links</button>
+        <div id="linksResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Test Individual Articles</h2>
+        <div id="articleTests"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 4: Manual Link Verification</h2>
+        <p>Click these links to manually test if they work:</p>
+        <div id="manualLinks"></div>
+    </div>
+
+    <script>
+        let contentData = null;
+
+        // Test 1: Check content.json structure
+        async function testContentStructure() {
+            const resultDiv = document.getElementById('structureResult');
+            resultDiv.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                const response = await fetch('config/content.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                contentData = await response.json();
+                
+                let html = '<div class="status success">✅ Content.json loaded successfully!</div>';
+                html += '<h3>Content Structure:</h3>';
+                html += '<ul>';
+                html += `<li><strong>Site Title:</strong> ${contentData.site?.title || 'Missing'}</li>`;
+                html += `<li><strong>Events Count:</strong> ${contentData.sections?.events?.items?.length || 0}</li>`;
+                html += `<li><strong>Has Article Data:</strong> ${contentData.sections?.events?.items?.[0]?.article ? 'Yes' : 'No'}</li>`;
+                html += '</ul>';
+                
+                resultDiv.innerHTML = html;
+                
+                // Auto-run article links test
+                setTimeout(testArticleLinks, 1000);
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="status error">❌ Error loading content.json: ${error.message}</div>`;
+            }
+        }
+
+        // Test 2: Verify article links
+        function testArticleLinks() {
+            if (!contentData) {
+                document.getElementById('linksResult').innerHTML = '<div class="status warning">⚠️ Please run Test 1 first</div>';
+                return;
+            }
+
+            const resultDiv = document.getElementById('linksResult');
+            const events = contentData.sections?.events?.items || [];
+            
+            let html = '<h3>Article Links Analysis:</h3>';
+            let validCount = 0;
+            let invalidCount = 0;
+            
+            events.forEach((event, index) => {
+                const isValid = event.link && event.link !== '#' && event.link.startsWith('articles/');
+                const status = isValid ? '✅' : '❌';
+                const statusClass = isValid ? 'success' : 'error';
+                
+                if (isValid) validCount++;
+                else invalidCount++;
+                
+                html += `<div class="status ${statusClass}">`;
+                html += `${status} Event ${index + 1}: ${event.title}`;
+                html += `<br><strong>Link:</strong> ${event.link || 'Missing'}`;
+                html += `<br><strong>Has Article Data:</strong> ${event.article ? 'Yes' : 'No'}`;
+                html += '</div>';
+            });
+            
+            html += `<div class="status ${invalidCount === 0 ? 'success' : 'warning'}">`;
+            html += `<strong>Summary:</strong> ${validCount} valid links, ${invalidCount} invalid links`;
+            html += '</div>';
+            
+            resultDiv.innerHTML = html;
+            
+            // Auto-generate article tests
+            generateArticleTests(events);
+        }
+
+        // Test 3: Generate individual article tests
+        function generateArticleTests(events) {
+            const container = document.getElementById('articleTests');
+            let html = '<h3>Individual Article Tests:</h3>';
+            
+            events.forEach((event, index) => {
+                if (event.link && event.link !== '#' && event.link.startsWith('articles/')) {
+                    html += `<div class="event-card">`;
+                    html += `<h4>${event.title}</h4>`;
+                    html += `<p><strong>Link:</strong> <a href="${event.link}" class="event-link" target="_blank">${event.link}</a></p>`;
+                    html += `<button class="test-button" onclick="testArticle('${event.link}', ${index})">Test Article ${index + 1}</button>`;
+                    html += `<div id="articleResult${index}"></div>`;
+                    html += '</div>';
+                }
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Test individual article
+        async function testArticle(link, index) {
+            const resultDiv = document.getElementById(`articleResult${index}`);
+            resultDiv.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                const response = await fetch(link);
+                if (response.ok) {
+                    resultDiv.innerHTML = '<div class="status success">✅ Article loads successfully!</div>';
+                } else {
+                    resultDiv.innerHTML = `<div class="status error">❌ Article failed to load: HTTP ${response.status}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="status error">❌ Error testing article: ${error.message}</div>`;
+            }
+        }
+
+        // Test 4: Manual link verification
+        function generateManualLinks() {
+            if (!contentData) return;
+            
+            const container = document.getElementById('manualLinks');
+            const events = contentData.sections?.events?.items || [];
+            
+            let html = '';
+            events.forEach((event, index) => {
+                if (event.link && event.link !== '#' && event.link.startsWith('articles/')) {
+                    html += `<div class="event-card">`;
+                    html += `<h4>${event.title}</h4>`;
+                    html += `<a href="${event.link}" class="event-link" target="_blank">🔗 Open Article: ${event.link}</a>`;
+                    html += '</div>';
+                }
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Auto-run tests when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-run first test
+            setTimeout(testContentStructure, 500);
+            
+            // Generate manual links
+            setTimeout(generateManualLinks, 1000);
+        });
+    </script>
+</body>
+</html>
