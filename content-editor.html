@@ -1,0 +1,1283 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Content Editor - Surrey Students' Law Society</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: #1a237e;
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .editor-section {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .editor-section h2 {
+            color: #1a237e;
+            border-bottom: 3px solid #d32f2f;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1a237e;
+            box-shadow: 0 0 8px rgba(26, 35, 126, 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .event-item {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #d32f2f;
+        }
+        
+        .event-item h4 {
+            color: #1a237e;
+            margin-bottom: 15px;
+        }
+        
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            background: #d32f2f;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #b71c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #666;
+        }
+        
+        .btn-secondary:hover {
+            background: #555;
+        }
+
+        /* Special styling for the backup button in JSON section */
+        .preview-section .actions .btn:nth-child(3) {
+            background: #ff9800 !important;
+            border-color: #ff9800 !important;
+        }
+
+        .preview-section .actions .btn:nth-child(3):hover {
+            background: #f57c00 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+        }
+        
+        .preview-section {
+            background: #e8f4fd;
+            border: 2px solid #1a237e;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .preview-section h3 {
+            color: #1a237e;
+            margin-bottom: 15px;
+        }
+        
+        .json-output {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .success-message {
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+        
+        .error-message {
+            background: #f44336;
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Message notification styling */
+        .message {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.4;
+            font-size: 14px;
+        }
+
+        .message-success::before {
+            content: '✅ ';
+            margin-right: 8px;
+        }
+
+        .message-warning::before {
+            content: '⚠️ ';
+            margin-right: 8px;
+        }
+
+        .message-info::before {
+            content: '📝 ';
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Content Editor</h1>
+            <p>Surrey Students' Law Society Website</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="success-message" id="successMessage">
+            ✅ Content updated successfully! Copy the JSON below and save it to config/content.json
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            ❌ Error updating content. Please check the form and try again.
+        </div>
+
+        <form id="contentForm">
+            <!-- Site Information -->
+            <div class="editor-section">
+                <h2>Site Information</h2>
+                <div class="form-group">
+                    <label for="siteTitle">Site Title</label>
+                    <input type="text" id="siteTitle" value="Surrey Students' Law Society" required>
+                </div>
+                <div class="form-group">
+                    <label for="siteTagline">Site Tagline</label>
+                    <input type="text" id="siteTagline" value="Empowering Future Legal Professionals" required>
+                </div>
+                <div class="form-group">
+                    <label for="siteDescription">Site Description</label>
+                    <textarea id="siteDescription" required>A vibrant community of law students dedicated to fostering legal knowledge, professional development, and networking opportunities.</textarea>
+                </div>
+            </div>
+
+            <!-- Banner Section -->
+            <div class="editor-section">
+                <h2>Banner Section</h2>
+                <div class="form-group">
+                    <label for="bannerTitle">Banner Title</label>
+                    <input type="text" id="bannerTitle" value="Surrey Students' Law Society" required>
+                </div>
+                <div class="form-group">
+                    <label for="bannerSubtitle">Banner Subtitle</label>
+                    <input type="text" id="bannerSubtitle" value="Empowering Future Legal Professionals" required>
+                </div>
+            </div>
+
+            <!-- About Section -->
+            <div class="editor-section">
+                <h2>About Section</h2>
+                <div class="form-group">
+                    <label for="aboutTitle">Section Title</label>
+                    <input type="text" id="aboutTitle" value="About Our Society" required>
+                </div>
+                <div class="form-group">
+                    <label for="aboutContent">Content</label>
+                    <textarea id="aboutContent" required>The Surrey Students' Law Society is a vibrant community of law students dedicated to fostering legal knowledge, professional development, and networking opportunities. We provide a platform for students to engage with legal professionals, participate in moot court competitions, and develop essential skills for their future careers in law.</textarea>
+                </div>
+            </div>
+
+            <!-- What We Offer Section -->
+            <div class="editor-section">
+                <h2>What We Offer Section</h2>
+                <div class="form-group">
+                    <label for="offeringsTitle">Section Title</label>
+                    <input type="text" id="offeringsTitle" value="What We Offer" required>
+                </div>
+                <div class="form-group">
+                    <label for="offeringsContent">Content</label>
+                    <textarea id="offeringsContent" required>Our society organizes regular workshops, guest lectures from legal professionals, networking events, and social activities. We also provide opportunities for students to participate in national and international legal competitions, helping them build practical experience and professional connections.</textarea>
+                </div>
+            </div>
+
+            <!-- Community Section -->
+            <div class="editor-section">
+                <h2>Join Our Community Section</h2>
+                <div class="form-group">
+                    <label for="communityTitle">Section Title</label>
+                    <input type="text" id="communityTitle" value="Join Our Community" required>
+                </div>
+                <div class="form-group">
+                    <label for="communityContent">Content</label>
+                    <textarea id="communityContent" required>Whether you're a first-year law student or in your final year, there's a place for you in our society. We welcome students from all backgrounds and experience levels. Join us to make the most of your legal education and build lasting friendships with fellow aspiring lawyers.</textarea>
+                </div>
+            </div>
+
+            <!-- Events Section -->
+            <div class="editor-section">
+                <h2>Events Section</h2>
+                <div class="form-group">
+                    <label for="eventsTitle">Section Title</label>
+                    <input type="text" id="eventsTitle" value="Upcoming Events" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventsDescription">Section Description</label>
+                    <textarea id="eventsDescription" required>Stay updated with our latest events, workshops, and activities. Follow us on social media and check back regularly for updates on what's happening in our law society community.</textarea>
+                </div>
+                
+                <h3 style="margin: 20px 0 15px 0; color: #1a237e;">Event Items</h3>
+                <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px; padding: 15px; margin-bottom: 20px;">
+                    <strong>⚠️ Important:</strong> The "Event Link" field must contain the correct article path (e.g., "articles/legal-writing-workshop.html") for the "LEARN MORE" buttons to work properly. Do not change these links unless you're creating new articles.
+                </div>
+                <div class="events-grid" id="eventsGrid">
+                    <!-- Event items will be populated here -->
+                </div>
+                <button type="button" class="btn btn-secondary" onclick="addEvent()">+ Add New Event</button>
+                
+                <div class="editor-section" style="margin-top: 30px;">
+                    <h3 style="color: #1a237e; margin-bottom: 20px;">Article Content Editor</h3>
+                    <p style="color: #666; margin-bottom: 20px;">Use this section to edit the detailed article content that appears when users click "LEARN MORE".</p>
+                    
+                    <div class="form-group">
+                        <label for="selectedEvent">Select Event to Edit:</label>
+                        <select id="selectedEvent" onchange="loadEventArticle()">
+                            <option value="">Choose an event...</option>
+                        </select>
+                    </div>
+                    
+                    <div id="articleEditor" style="display: none;">
+                        <h4 style="color: #1a237e; margin: 20px 0 15px 0;">Article Details</h4>
+                        
+                        <div class="form-group">
+                            <label for="articleFullTitle">Full Article Title</label>
+                            <input type="text" id="articleFullTitle" placeholder="e.g., Legal Writing Workshop Series">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="articleDate">Event Date</label>
+                            <input type="text" id="articleDate" placeholder="e.g., September 15-30, 2024">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="articleLocation">Event Location</label>
+                            <input type="text" id="articleLocation" placeholder="e.g., University of Surrey, Law Building">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="articleDuration">Event Duration</label>
+                            <input type="text" id="articleDuration" placeholder="e.g., 2 weeks">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="articleInstructor">Instructor/Organizer</label>
+                            <input type="text" id="articleInstructor" placeholder="e.g., Prof. Sarah Mitchell, QC">
+                        </div>
+                        
+                        <h4 style="color: #1a237e; margin: 20px 0 15px 0;">Article Sections</h4>
+                        <div id="articleSections">
+                            <!-- Article sections will be populated here -->
+                        </div>
+                        
+                        <button type="button" class="btn btn-secondary" onclick="addArticleSection()" style="margin-top: 15px;">+ Add New Section</button>
+                        
+                        <div class="form-group" style="margin-top: 20px;">
+                            <label for="articleContact">Contact Email</label>
+                            <input type="email" id="articleContact" placeholder="e.g., workshops@surreylawsociety.ac.uk">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="articleTags">Tags (comma-separated)</label>
+                            <input type="text" id="articleTags" placeholder="e.g., Workshop, Legal Writing, Professional Development">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="editor-section">
+                <h2>Contact Information</h2>
+                <div class="form-group">
+                    <label for="contactTitle">Section Title</label>
+                    <input type="text" id="contactTitle" value="Get in touch" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactDescription">Section Description</label>
+                    <textarea id="contactDescription" required>Have questions about joining our society or want to learn more about our activities? We'd love to hear from you! Fill out the form below or reach out to us through our social media channels.</textarea>
+                </div>
+                
+                <h3 style="margin: 20px 0 15px 0; color: #1a237e;">Address</h3>
+                <div class="form-group">
+                    <label for="orgName">Organization Name</label>
+                    <input type="text" id="orgName" value="Surrey Students' Law Society" required>
+                </div>
+                <div class="form-group">
+                    <label for="institution">Institution</label>
+                    <input type="text" id="institution" value="University of Surrey" required>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" value="Guildford, Surrey, UK" required>
+                </div>
+                
+                <h3 style="margin: 20px 0 15px 0; color: #1a237e;">Contact Details</h3>
+                <div class="form-group">
+                    <label for="contactEmail">Email Address</label>
+                    <input type="email" id="contactEmail" value="lawsociety@surrey.ac.uk" required>
+                </div>
+                
+                <h3 style="margin: 20px 0 15px 0; color: #1a237e;">Social Media</h3>
+                <div class="form-group">
+                    <label for="twitter">Twitter</label>
+                    <input type="text" id="twitter" value="@SurreyLawSoc">
+                </div>
+                <div class="form-group">
+                    <label for="facebook">Facebook</label>
+                    <input type="text" id="facebook" value="facebook.com/SurreyLawSociety">
+                </div>
+                <div class="form-group">
+                    <label for="instagram">Instagram</label>
+                    <input type="text" id="instagram" value="@surreylawsociety">
+                </div>
+                <div class="form-group">
+                    <label for="linkedin">LinkedIn</label>
+                    <input type="text" id="linkedin" value="linkedin.com/company/surrey-law-society">
+                </div>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn">Generate Updated Content</button>
+                <button type="button" class="btn btn-secondary" onclick="loadDefaultContent()">Load Default Content</button>
+            </div>
+        </form>
+
+        <div class="preview-section" id="previewSection" style="display: none;">
+            <h3>Generated JSON Content</h3>
+            <p>Copy this content and save it to <code>config/content.json</code> in your website folder:</p>
+            <div class="json-output" id="jsonOutput"></div>
+            <div class="actions" style="margin-top: 20px;">
+                <button type="button" class="btn" onclick="copyToClipboard()">Copy to Clipboard</button>
+                <button type="button" class="btn btn-secondary" onclick="downloadJSON()">Download JSON File</button>
+                <button type="button" class="btn btn-secondary" onclick="createBackupAndUpdate()" style="background-color: #ff9800; border-color: #ff9800;">
+                    💾 Backup & Update Content
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Default events data
+        const defaultEvents = [
+            {
+                title: "Legal Writing Workshop",
+                description: "Improve your legal writing skills with our expert-led workshop series.",
+                link: "articles/legal-writing-workshop.html",
+                image: {
+                    src: "images/pic04.jpg",
+                    alt: "Workshop"
+                },
+                article: {
+                    fullTitle: "Legal Writing Workshop Series",
+                    date: "September 15-30, 2024",
+                    location: "University of Surrey, Law Building",
+                    duration: "2 weeks",
+                    instructor: "Prof. Sarah Mitchell, QC",
+                    content: [
+                        {
+                            section: "Overview",
+                            text: "Our comprehensive legal writing workshop series is designed to transform your legal writing skills from basic to professional level. Whether you're a first-year student or preparing for your final year, this workshop will provide you with the essential tools and techniques needed for effective legal communication."
+                        },
+                        {
+                            section: "What You'll Learn",
+                            text: "• Legal memorandum writing and structure\n• Case brief analysis and presentation\n• Contract drafting fundamentals\n• Legal research methodology\n• Citation and referencing standards\n• Professional legal correspondence"
+                        },
+                        {
+                            section: "Workshop Schedule",
+                            text: "Week 1: Foundations of Legal Writing\n• Day 1-2: Legal writing principles and structure\n• Day 3-4: Research methods and case analysis\n• Day 5: Practice session and feedback\n\nWeek 2: Advanced Applications\n• Day 1-2: Contract drafting and negotiation\n• Day 3-4: Legal memorandum writing\n• Day 5: Final project and certification"
+                        },
+                        {
+                            section: "Benefits",
+                            text: "• Certificate of completion for your CV\n• Sample writing portfolio for job applications\n• Networking with legal professionals\n• Practical skills for moot court competitions\n• Enhanced academic performance"
+                        },
+                        {
+                            section: "Registration",
+                            text: "Limited to 25 students per session. Early registration recommended. Contact us for group discounts and payment plans."
+                        }
+                    ],
+                    contact: "workshops@surreylawsociety.ac.uk",
+                    tags: ["Workshop", "Legal Writing", "Professional Development"]
+                }
+            },
+            {
+                title: "Networking Events",
+                description: "Connect with legal professionals and expand your professional network.",
+                link: "articles/networking-events.html",
+                image: {
+                    src: "images/pic05.jpg",
+                    alt: "Networking"
+                },
+                article: {
+                    fullTitle: "Professional Networking Series",
+                    date: "Monthly throughout academic year",
+                    location: "Various locations in Guildford and London",
+                    duration: "Evening events (6:00 PM - 9:00 PM)",
+                    organizer: "Surrey Law Society Networking Committee",
+                    content: [
+                        {
+                            section: "About Our Networking Series",
+                            text: "Our monthly networking events bring together law students, practicing lawyers, judges, and legal professionals from various sectors. These events provide invaluable opportunities to build relationships, gain insights into different legal careers, and discover internship and job opportunities."
+                        },
+                        {
+                            section: "Upcoming Events",
+                            text: "September: 'Meet the Barristers' - Guildford Crown Court\nOctober: 'In-House Counsel Panel' - London Legal District\nNovember: 'International Law Perspectives' - University Campus\nDecember: 'Holiday Networking Mixer' - Guildford Town Centre"
+                        },
+                        {
+                            section: "Event Format",
+                            text: "• 6:00-6:30 PM: Registration and welcome drinks\n• 6:30-7:30 PM: Panel discussion or keynote speaker\n• 7:30-8:30 PM: Networking session with professionals\n• 8:30-9:00 PM: Informal conversations and follow-ups"
+                        },
+                        {
+                            section: "What to Expect",
+                            text: "• Professional dress code required\n• Business cards encouraged\n• Pre-event preparation materials provided\n• Post-event follow-up guidance\n• LinkedIn group access for continued networking"
+                        },
+                        {
+                            section: "Success Stories",
+                            text: "Previous attendees have secured:\n• Summer internships at top law firms\n• Mentorship opportunities with senior lawyers\n• Job offers upon graduation\n• Valuable career advice and guidance"
+                        }
+                    ],
+                    contact: "networking@surreylawsociety.ac.uk",
+                    tags: ["Networking", "Professional Development", "Career Opportunities"]
+                }
+            },
+            {
+                title: "Moot Court Competition",
+                description: "Participate in our annual moot court competition and showcase your advocacy skills.",
+                link: "articles/moot-court-competition.html",
+                image: {
+                    src: "images/pic06.jpg",
+                    alt: "Competition"
+                },
+                article: {
+                    fullTitle: "Annual Moot Court Competition",
+                    date: "March 15-20, 2025",
+                    location: "University of Surrey, Moot Court Room",
+                    duration: "6 days",
+                    judges: "Senior Barristers and Judges",
+                    content: [
+                        {
+                            section: "Competition Overview",
+                            text: "Our annual moot court competition is the highlight of the academic year, providing students with the opportunity to argue real legal cases before experienced judges and barristers. This prestigious event tests your advocacy skills, legal knowledge, and courtroom presence."
+                        },
+                        {
+                            section: "Competition Structure",
+                            text: "• Preliminary Rounds: March 15-17 (all participants)\n• Quarter Finals: March 18 (top 8 teams)\n• Semi Finals: March 19 (top 4 teams)\n• Grand Final: March 20 (championship match)"
+                        },
+                        {
+                            section: "Case Materials",
+                            text: "• Real appellate court cases\n• Comprehensive case bundles provided\n• 4 weeks preparation time\n• Access to law library resources\n• Mentoring from previous winners"
+                        },
+                        {
+                            section: "Prizes and Recognition",
+                            text: "• 1st Place: £500 cash prize + trophy\n• 2nd Place: £300 cash prize + certificate\n• 3rd Place: £200 cash prize + certificate\n• Best Speaker Award: £100 + special recognition\n• All finalists receive certificates for CVs"
+                        },
+                        {
+                            section: "Judging Criteria",
+                            text: "• Legal argument quality (40%)\n• Advocacy skills and presentation (30%)\n• Response to judicial questions (20%)\n• Professional conduct (10%)"
+                        },
+                        {
+                            section: "Registration",
+                            text: "Teams of 2-3 students. Registration opens January 15, 2025. Early registration recommended as spaces are limited."
+                        }
+                    ],
+                    contact: "mootcourt@surreylawsociety.ac.uk",
+                    tags: ["Competition", "Advocacy", "Courtroom Skills"]
+                }
+            },
+            {
+                title: "Social Events",
+                description: "Build friendships and enjoy social activities with fellow law students.",
+                link: "articles/social-events.html",
+                image: {
+                    src: "images/pic07.jpg",
+                    alt: "Social"
+                },
+                article: {
+                    fullTitle: "Social Events and Activities",
+                    date: "Throughout the academic year",
+                    location: "University campus and Guildford area",
+                    organizer: "Social Committee",
+                    content: [
+                        {
+                            section: "Welcome Week Events",
+                            text: "Kick off the academic year with our exciting welcome week activities:\n• Freshers' Party at the Student Union\n• Campus tour and scavenger hunt\n• Meet and greet with society members\n• Pizza and movie night"
+                        },
+                        {
+                            section: "Regular Social Activities",
+                            text: "• Weekly coffee mornings in the law building\n• Monthly pub quizzes at local venues\n• Seasonal celebrations (Halloween, Christmas, Easter)\n• Sports events and team building activities\n• Cultural celebrations and international food nights"
+                        },
+                        {
+                            section: "Special Events",
+                            text: "• End of semester celebration dinners\n• Summer garden party\n• Charity fundraising events\n• Alumni networking socials\n• Inter-university law society competitions"
+                        },
+                        {
+                            section: "Benefits of Participation",
+                            text: "• Build lasting friendships with fellow students\n• Reduce stress and improve mental wellbeing\n• Develop teamwork and leadership skills\n• Create memories that last beyond university\n• Network in a relaxed, social environment"
+                        },
+                        {
+                            section: "Getting Involved",
+                            text: "• Join our social media groups for updates\n• Volunteer to help organize events\n• Suggest new activities and ideas\n• Attend our social committee meetings\n• Follow us on Instagram for event photos"
+                        }
+                    ],
+                    contact: "social@surreylawsociety.ac.uk",
+                    tags: ["Social", "Community", "Friendship"]
+                }
+            }
+        ];
+
+        let events = [...defaultEvents];
+
+        // Initialize the form
+        document.addEventListener('DOMContentLoaded', function() {
+            populateEvents();
+            populateEventSelector();
+            
+            // Try to load existing content from content.json
+            loadExistingContent();
+        });
+
+        // Populate events grid
+        function populateEvents() {
+            const eventsGrid = document.getElementById('eventsGrid');
+            eventsGrid.innerHTML = '';
+            
+            events.forEach((event, index) => {
+                const eventDiv = document.createElement('div');
+                eventDiv.className = 'event-item';
+                eventDiv.innerHTML = `
+                    <h4>Event ${index + 1}</h4>
+                    <div class="form-group">
+                        <label>Event Title</label>
+                        <input type="text" value="${event.title}" onchange="updateEvent(${index}, 'title', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Event Description</label>
+                        <textarea onchange="updateEvent(${index}, 'description', this.value)">${event.description}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Event Link</label>
+                        <input type="text" value="${event.link}" onchange="updateEvent(${index}, 'link', this.value)">
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="removeEvent(${index})" style="margin-top: 10px;">Remove Event</button>
+                `;
+                eventsGrid.appendChild(eventDiv);
+            });
+        }
+
+        // Update event data
+        function updateEvent(index, field, value) {
+            events[index][field] = value;
+            
+            // If updating the title, also update the article fullTitle if it exists
+            if (field === 'title' && events[index].article) {
+                events[index].article.fullTitle = value;
+            }
+        }
+
+        // Add new event
+        function addEvent() {
+            events.push({
+                title: "New Event",
+                description: "Event description...",
+                link: "articles/new-event.html",
+                image: {
+                    src: "images/pic04.jpg",
+                    alt: "New Event"
+                },
+                article: {
+                    fullTitle: "New Event",
+                    date: "",
+                    location: "",
+                    duration: "",
+                    instructor: "",
+                    content: [
+                        {
+                            section: "Overview",
+                            text: "Event overview..."
+                        }
+                    ],
+                    contact: "events@surreylawsociety.ac.uk",
+                    tags: ["Event"]
+                }
+            });
+            populateEvents();
+        }
+
+        // Remove event
+        function removeEvent(index) {
+            events.splice(index, 1);
+            populateEvents();
+        }
+
+        // Load existing content from content.json
+        async function loadExistingContent() {
+            try {
+                const response = await fetch('config/content.json');
+                if (response.ok) {
+                    const existingContent = await response.json();
+                    
+                    // Update form fields with existing content
+                    if (existingContent.site) {
+                        document.getElementById('siteTitle').value = existingContent.site.title || '';
+                        document.getElementById('siteTagline').value = existingContent.site.tagline || '';
+                        document.getElementById('siteDescription').value = existingContent.site.description || '';
+                    }
+                    
+                    if (existingContent.banner) {
+                        document.getElementById('bannerTitle').value = existingContent.banner.title || '';
+                        document.getElementById('bannerSubtitle').value = existingContent.banner.subtitle || '';
+                    }
+                    
+                    if (existingContent.sections) {
+                        if (existingContent.sections.about) {
+                            document.getElementById('aboutTitle').value = existingContent.sections.about.title || '';
+                            document.getElementById('aboutContent').value = existingContent.sections.about.content || '';
+                        }
+                        
+                        if (existingContent.sections.offerings) {
+                            document.getElementById('offeringsTitle').value = existingContent.sections.offerings.title || '';
+                            document.getElementById('offeringsContent').value = existingContent.sections.offerings.content || '';
+                        }
+                        
+                        if (existingContent.sections.community) {
+                            document.getElementById('communityTitle').value = existingContent.sections.community.title || '';
+                            document.getElementById('communityContent').value = existingContent.sections.community.content || '';
+                        }
+                        
+                        if (existingContent.sections.events) {
+                            document.getElementById('eventsTitle').value = existingContent.sections.events.title || '';
+                            document.getElementById('eventsDescription').value = existingContent.sections.events.description || '';
+                            
+                            // Load existing events with their article data
+                            if (existingContent.sections.events.items && existingContent.sections.events.items.length > 0) {
+                                events = [...existingContent.sections.events.items];
+                                populateEvents();
+                                populateEventSelector();
+                            }
+                        }
+                    }
+                    
+                    if (existingContent.contact) {
+                        document.getElementById('contactTitle').value = existingContent.contact.title || '';
+                        document.getElementById('contactDescription').value = existingContent.contact.description || '';
+                        
+                        if (existingContent.contact.info) {
+                            document.getElementById('orgName').value = existingContent.contact.info.address?.organization || '';
+                            document.getElementById('institution').value = existingContent.contact.info.address?.institution || '';
+                            document.getElementById('location').value = existingContent.contact.info.address?.location || '';
+                            document.getElementById('contactEmail').value = existingContent.contact.info.email || '';
+                        }
+                        
+                        if (existingContent.contact.info?.social) {
+                            document.getElementById('twitter').value = existingContent.contact.info.social.twitter || '';
+                            document.getElementById('facebook').value = existingContent.contact.info.social.facebook || '';
+                            document.getElementById('instagram').value = existingContent.contact.info.social.instagram || '';
+                            document.getElementById('linkedin').value = existingContent.contact.info.social.linkedin || '';
+                        }
+                    }
+                    
+                    console.log('✅ Existing content loaded successfully');
+                }
+            } catch (error) {
+                console.log('ℹ️ No existing content.json found, using defaults');
+            }
+        }
+
+        // Load default content
+        function loadDefaultContent() {
+            document.getElementById('siteTitle').value = "Surrey Students' Law Society";
+            document.getElementById('siteTagline').value = "Empowering Future Legal Professionals";
+            document.getElementById('siteDescription').value = "A vibrant community of law students dedicated to fostering legal knowledge, professional development, and networking opportunities.";
+            document.getElementById('bannerTitle').value = "Surrey Students' Law Society";
+            document.getElementById('bannerSubtitle').value = "Empowering Future Legal Professionals";
+            document.getElementById('aboutTitle').value = "About Our Society";
+            document.getElementById('aboutContent').value = "The Surrey Students' Law Society is a vibrant community of law students dedicated to fostering legal knowledge, professional development, and networking opportunities. We provide a platform for students to engage with legal professionals, participate in moot court competitions, and develop essential skills for their future careers in law.";
+            document.getElementById('offeringsTitle').value = "What We Offer";
+            document.getElementById('offeringsContent').value = "Our society organizes regular workshops, guest lectures from legal professionals, networking events, and social activities. We also provide opportunities for students to participate in national and international legal competitions, helping them build practical experience and professional connections.";
+            document.getElementById('communityTitle').value = "Join Our Community";
+            document.getElementById('communityContent').value = "Whether you're a first-year law student or in your final year, there's a place for you in our society. We welcome students from all backgrounds and experience levels. Join us to make the most of your legal education and build lasting friendships with fellow aspiring lawyers.";
+            document.getElementById('eventsTitle').value = "Upcoming Events";
+            document.getElementById('eventsDescription').value = "Stay updated with our latest events, workshops, and activities. Follow us on social media and check back regularly for updates on what's happening in our law society community.";
+            document.getElementById('contactTitle').value = "Get in touch";
+            document.getElementById('contactDescription').value = "Have questions about joining our society or want to learn more about our activities? We'd love to hear from you! Fill out the form below or reach out to us through our social media channels.";
+            document.getElementById('orgName').value = "Surrey Students' Law Society";
+            document.getElementById('institution').value = "University of Surrey";
+            document.getElementById('location').value = "Guildford, Surrey, UK";
+            document.getElementById('contactEmail').value = "lawsociety@surrey.ac.uk";
+            document.getElementById('twitter').value = "@SurreyLawSoc";
+            document.getElementById('facebook').value = "facebook.com/SurreyLawSociety";
+            document.getElementById('instagram').value = "@surreylawsociety";
+            document.getElementById('linkedin').value = "linkedin.com/company/surrey-law-society";
+            
+            events = [...defaultEvents];
+            populateEvents();
+        }
+
+        // Handle form submission
+        document.getElementById('contentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            generateJSON();
+        });
+
+        // Generate JSON content
+        function generateJSON() {
+            // Log events data for debugging
+            console.log('Events data being generated:', events);
+            
+            // Validate article links
+            const invalidLinks = events.filter(event => !event.link || event.link === '#' || !event.link.startsWith('articles/'));
+            if (invalidLinks.length > 0) {
+                console.warn('⚠️ Warning: Some events have invalid article links:', invalidLinks);
+                alert('Warning: Some events have invalid article links. This may cause "LEARN MORE" buttons to fail. Please check the Event Link fields.');
+            }
+            
+            const content = {
+                site: {
+                    title: document.getElementById('siteTitle').value,
+                    tagline: document.getElementById('siteTagline').value,
+                    description: document.getElementById('siteDescription').value
+                },
+                header: {
+                    title: document.getElementById('bannerTitle').value,
+                    menu: {
+                        home: "Home",
+                        about: "About",
+                        contact: "Get in Touch"
+                    }
+                },
+                banner: {
+                    title: document.getElementById('bannerTitle').value,
+                    subtitle: document.getElementById('bannerSubtitle').value,
+                    logo: {
+                        src: "images/Logo-no-bg.PNG",
+                        alt: "Surrey Students' Law Society Logo"
+                    }
+                },
+                sections: {
+                    about: {
+                        title: document.getElementById('aboutTitle').value,
+                        content: document.getElementById('aboutContent').value,
+                        image: {
+                            src: "images/pic01.jpg",
+                            alt: "Law Society Meeting"
+                        }
+                    },
+                    offerings: {
+                        title: document.getElementById('offeringsTitle').value,
+                        content: document.getElementById('offeringsContent').value,
+                        image: {
+                            src: "images/pic02.jpg",
+                            alt: "Legal Education"
+                        }
+                    },
+                    community: {
+                        title: document.getElementById('communityTitle').value,
+                        content: document.getElementById('communityContent').value,
+                        image: {
+                            src: "images/pic03.jpg",
+                            alt: "Student Community"
+                        }
+                    },
+                    events: {
+                        title: document.getElementById('eventsTitle').value,
+                        description: document.getElementById('eventsDescription').value,
+                        items: events,
+                        buttonText: "View All Events"
+                    }
+                },
+                contact: {
+                    title: document.getElementById('contactTitle').value,
+                    description: document.getElementById('contactDescription').value,
+                    form: {
+                        name: "Name",
+                        email: "Email",
+                        message: "Message",
+                        submit: "Send Message"
+                    },
+                    info: {
+                        address: {
+                            organization: document.getElementById('orgName').value,
+                            institution: document.getElementById('institution').value,
+                            location: document.getElementById('location').value
+                        },
+                        email: document.getElementById('contactEmail').value,
+                        social: {
+                            twitter: document.getElementById('twitter').value,
+                            facebook: document.getElementById('facebook').value,
+                            instagram: document.getElementById('instagram').value,
+                            linkedin: document.getElementById('linkedin').value
+                        }
+                    }
+                },
+                footer: {
+                    copyright: document.getElementById('orgName').value + ". All rights reserved.",
+                    designCredit: "Design: HTML5 UP"
+                }
+            };
+
+            const jsonOutput = document.getElementById('jsonOutput');
+            jsonOutput.textContent = JSON.stringify(content, null, 2);
+            
+            document.getElementById('previewSection').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 5000);
+            
+            // Scroll to preview section
+            document.getElementById('previewSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Copy to clipboard
+        function copyToClipboard() {
+            const jsonOutput = document.getElementById('jsonOutput');
+            navigator.clipboard.writeText(jsonOutput.textContent).then(() => {
+                alert('JSON content copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy to clipboard. Please select and copy manually.');
+            });
+        }
+
+        // Download JSON file
+        function downloadJSON() {
+            const jsonOutput = document.getElementById('jsonOutput');
+            const blob = new Blob([jsonOutput.textContent], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'content.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Article editing functions
+        function populateEventSelector() {
+            const selector = document.getElementById('selectedEvent');
+            selector.innerHTML = '<option value="">Choose an event...</option>';
+            
+            events.forEach((event, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = event.title;
+                selector.appendChild(option);
+            });
+        }
+
+        function loadEventArticle() {
+            const selectedIndex = document.getElementById('selectedEvent').value;
+            if (selectedIndex === '') {
+                document.getElementById('articleEditor').style.display = 'none';
+                return;
+            }
+
+            const event = events[selectedIndex];
+            document.getElementById('articleEditor').style.display = 'block';
+
+            // Load article data if it exists
+            if (event.article) {
+                document.getElementById('articleFullTitle').value = event.article.fullTitle || '';
+                document.getElementById('articleDate').value = event.article.date || '';
+                document.getElementById('articleLocation').value = event.article.location || '';
+                document.getElementById('articleDuration').value = event.article.duration || '';
+                document.getElementById('articleInstructor').value = event.article.instructor || event.article.organizer || '';
+                document.getElementById('articleContact').value = event.article.contact || '';
+                document.getElementById('articleTags').value = event.article.tags ? event.article.tags.join(', ') : '';
+                
+                // Load article sections
+                loadArticleSections(event.article.content || []);
+            } else {
+                // Initialize empty article
+                document.getElementById('articleFullTitle').value = event.title;
+                document.getElementById('articleDate').value = '';
+                document.getElementById('articleLocation').value = '';
+                document.getElementById('articleDuration').value = '';
+                document.getElementById('articleInstructor').value = '';
+                document.getElementById('articleContact').value = '';
+                document.getElementById('articleTags').value = '';
+                
+                // Initialize with default sections
+                loadArticleSections([
+                    { section: 'Overview', text: '' },
+                    { section: 'What You\'ll Learn', text: '' },
+                    { section: 'Event Details', text: '' }
+                ]);
+            }
+        }
+
+        function loadArticleSections(sections) {
+            const container = document.getElementById('articleSections');
+            container.innerHTML = '';
+            
+            sections.forEach((section, index) => {
+                addArticleSection(section.section, section.text, index);
+            });
+        }
+
+        function addArticleSection(title = '', content = '', index = null) {
+            const container = document.getElementById('articleSections');
+            const sectionDiv = document.createElement('div');
+            sectionDiv.className = 'article-section-editor';
+            sectionDiv.style.border = '1px solid #ddd';
+            sectionDiv.style.padding = '15px';
+            sectionDiv.style.margin = '10px 0';
+            sectionDiv.style.borderRadius = '5px';
+            
+            const sectionIndex = index !== null ? index : container.children.length;
+            
+            sectionDiv.innerHTML = `
+                <div class="form-group">
+                    <label>Section Title</label>
+                    <input type="text" value="${title}" onchange="updateArticleSection(${sectionIndex}, 'section', this.value)">
+                </div>
+                <div class="form-group">
+                    <label>Section Content</label>
+                    <textarea rows="4" onchange="updateArticleSection(${sectionIndex}, 'text', this.value)">${content}</textarea>
+                </div>
+                <button type="button" class="btn btn-secondary" onclick="removeArticleSection(${sectionIndex})" style="margin-top: 10px;">Remove Section</button>
+            `;
+            
+            container.appendChild(sectionDiv);
+        }
+
+        function updateArticleSection(index, field, value) {
+            const selectedEventIndex = document.getElementById('selectedEvent').value;
+            if (selectedEventIndex === '') return;
+
+            if (!events[selectedEventIndex].article) {
+                events[selectedEventIndex].article = {
+                    content: []
+                };
+            }
+
+            if (!events[selectedEventIndex].article.content[index]) {
+                events[selectedEventIndex].article.content[index] = {};
+            }
+
+            events[selectedEventIndex].article.content[index][field] = value;
+        }
+
+        function removeArticleSection(index) {
+            const selectedEventIndex = document.getElementById('selectedEvent').value;
+            if (selectedEventIndex === '') return;
+
+            if (events[selectedEventIndex].article && events[selectedEventIndex].article.content) {
+                events[selectedEventIndex].article.content.splice(index, 1);
+                loadEventArticle(); // Reload to refresh section numbers
+            }
+        }
+
+        // Update the generateJSON function to include article data
+        const originalGenerateJSON = generateJSON;
+        generateJSON = function() {
+            // Update article data before generating JSON
+            const selectedEventIndex = document.getElementById('selectedEvent').value;
+            if (selectedEventIndex !== '') {
+                const event = events[selectedEventIndex];
+                if (event.article) {
+                    event.article.fullTitle = document.getElementById('articleFullTitle').value;
+                    event.article.date = document.getElementById('articleDate').value;
+                    event.article.location = document.getElementById('articleLocation').value;
+                    event.article.duration = document.getElementById('articleDuration').value;
+                    event.article.instructor = document.getElementById('articleInstructor').value;
+                    event.article.contact = document.getElementById('articleContact').value;
+                    event.article.tags = document.getElementById('articleTags').value.split(',').map(tag => tag.trim()).filter(tag => tag);
+                }
+            }
+            
+            originalGenerateJSON();
+        };
+
+        // Backup and update functionality
+        async function createBackupAndUpdate() {
+            try {
+                // First, create a backup of the current content.json
+                console.log('Creating backup of current content.json...');
+                
+                // Try to read the current content.json file
+                const response = await fetch('config/content.json');
+                if (response.ok) {
+                    const currentContent = await response.text();
+                    
+                    // Create backup filename with timestamp
+                    const now = new Date();
+                    const timestamp = now.toISOString().replace(/[:.]/g, '-').slice(0, 19);
+                    const backupFilename = `content-backup-${timestamp}.json`;
+                    
+                    // Download the backup file
+                    const blob = new Blob([currentContent], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = backupFilename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    console.log(`Backup created: ${backupFilename}`);
+                    
+                    // Show success message for backup
+                    showMessage(`✅ Backup created successfully: ${backupFilename}`, 'success');
+                    
+                    // Wait a moment for the backup to complete, then show comprehensive instructions
+                    setTimeout(() => {
+                        showComprehensiveUpdateInstructions(backupFilename);
+                    }, 1000);
+                    
+                } else {
+                    throw new Error('Could not read current content.json file');
+                }
+                
+            } catch (error) {
+                console.error('Error creating backup:', error);
+                showMessage('⚠️ Could not create backup. Please ensure config/content.json exists and is readable.', 'warning');
+                
+                // Still show instructions even if backup fails
+                setTimeout(() => {
+                    showComprehensiveUpdateInstructions('backup-failed');
+                }, 1000);
+            }
+        }
+
+        // Show comprehensive update instructions
+        function showComprehensiveUpdateInstructions(backupFilename) {
+            const instructions = `
+                <div style="background: #e8f4fd; border: 2px solid #1a237e; border-radius: 8px; padding: 20px; margin: 20px 0;">
+                    <h3 style="color: #1a237e; margin-bottom: 15px;">🔄 Complete Update Instructions</h3>
+                    
+                    ${backupFilename !== 'backup-failed' ? 
+                        `<p><strong>✅ Backup Created:</strong> ${backupFilename}</p>` : 
+                        `<p><strong>⚠️ Backup Failed:</strong> Please manually backup your current config/content.json file</p>`
+                    }
+                    
+                    <h4 style="color: #1a237e; margin: 15px 0 10px 0;">Step-by-Step Update Process:</h4>
+                    
+                    <ol style="margin-left: 20px; line-height: 1.6;">
+                        <li><strong>Create Backup Folder:</strong> In your website root, create a folder called <code>content-backup</code></li>
+                        <li><strong>Move Backup File:</strong> Move the downloaded ${backupFilename} to the <code>content-backup</code> folder</li>
+                        <li><strong>Copy New Content:</strong> Copy the JSON content from the box above</li>
+                        <li><strong>Update File:</strong> Open <code>config/content.json</code> and replace all content</li>
+                        <li><strong>Save & Test:</strong> Save the file and refresh your website to see changes</li>
+                    </ol>
+                    
+                    <h4 style="color: #1a237e; margin: 15px 0 10px 0;">File Structure After Update:</h4>
+                    <pre style="background: #f8f8f8; padding: 10px; border-radius: 4px; font-size: 12px;">
+your-website/
+├── config/
+│   └── content.json          ← Updated with new content
+├── content-backup/
+│   └── ${backupFilename}     ← Your backup file
+├── index.html
+└── ... other files</pre>
+                    
+                    <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px;">
+                        <strong>💡 Pro Tip:</strong> Always test your website after updating content to ensure everything works correctly!
+                    </div>
+                </div>
+            `;
+            
+            // Insert instructions above the JSON output
+            const jsonOutput = document.getElementById('jsonOutput');
+            jsonOutput.insertAdjacentHTML('beforebegin', instructions);
+            
+            // Scroll to the instructions
+            document.querySelector('.preview-section').scrollIntoView({ behavior: 'smooth' });
+            
+            showMessage('📋 Complete update instructions displayed below!', 'info');
+        }
+
+        // Helper function to show messages
+        function showMessage(message, type = 'info') {
+            // Remove any existing message
+            const existingMessage = document.querySelector('.message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+            
+            // Create new message element
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message message-${type}`;
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 5px;
+                color: white;
+                font-weight: 600;
+                z-index: 1000;
+                max-width: 400px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            // Set background color based on message type
+            switch (type) {
+                case 'success':
+                    messageDiv.style.backgroundColor = '#4caf50';
+                    break;
+                case 'warning':
+                    messageDiv.style.backgroundColor = '#ff9800';
+                    break;
+                case 'error':
+                    messageDiv.style.backgroundColor = '#f44336';
+                    break;
+                default:
+                    messageDiv.style.backgroundColor = '#2196f3';
+            }
+            
+            messageDiv.textContent = message;
+            
+            // Add to page
+            document.body.appendChild(messageDiv);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.style.animation = 'slideOut 0.3s ease-in';
+                    setTimeout(() => {
+                        if (messageDiv.parentNode) {
+                            messageDiv.remove();
+                        }
+                    }, 300);
+                }
+            }, 5000);
+        }
+
+        // Add CSS animations for messages
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

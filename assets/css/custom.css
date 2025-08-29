@@ -1,0 +1,497 @@
+/* Custom CSS for Surrey Students' Law Society */
+/* Override default colors with logo theme: Dark Blue (#1a237e) and Red (#d32f2f) */
+
+:root {
+    --primary-blue: #091E39;
+    --primary-red: #7D080C;
+    --dark-blue: #091E39;
+    --light-blue: #091E39;
+    --accent-blue: #0D305E;
+    --accent-red: #CA272C;
+    --text-light: #ffffff;
+    --text-dark: #1a237e;
+}
+
+/* Header styling */
+#header {
+    background-color: var(--primary-blue) !important;
+    border-bottom: 3px solid var(--primary-red) !important;
+}
+
+#header h1 a {
+    color: var(--text-light) !important;
+}
+
+#header h1 a:hover {
+    color: var(--accent-red) !important;
+}
+
+/* Menu styling */
+#menu {
+    background-color: var(--primary-blue) !important;
+}
+
+#menu .inner {
+    background-color: var(--primary-blue) !important;
+}
+
+#menu .inner h2 {
+    color: var(--text-light) !important;
+    border-bottom: 2px solid var(--primary-red) !important;
+}
+
+#menu .inner .links a {
+    color: var(--text-light) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+#menu .inner .links a:hover {
+    color: var(--accent-red) !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Banner styling */
+#banner {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 50%, var(--primary-blue) 100%) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+#banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(26, 35, 126, 0.3) 70%, rgba(26, 35, 126, 0.8) 100%);
+    pointer-events: none;
+}
+
+#banner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 0%, rgba(211, 47, 47, 0.1) 25%, transparent 50%, rgba(26, 35, 126, 0.2) 75%, transparent 100%);
+    pointer-events: none;
+    animation: shimmer 8s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+#banner .inner {
+    position: relative;
+    z-index: 2;
+}
+
+#banner .logo {
+    margin-bottom: 2em;
+}
+
+#banner .logo .logo-image {
+    max-width: 200px;
+    height: auto;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 3;
+}
+
+#banner .logo .logo-image:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+}
+
+/* Logo fade effect */
+#banner .logo {
+    position: relative;
+    margin-bottom: 2em;
+}
+
+#banner .logo::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background: radial-gradient(ellipse, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 1;
+    animation: logoGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlow {
+    0% { opacity: 0.3; transform: scale(1); }
+    100% { opacity: 0.6; transform: scale(1.1); }
+}
+
+#banner h2 {
+    color: var(--text-light) !important;
+    border-bottom: 3px solid var(--primary-red) !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#banner p {
+    color: var(--text-light) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Section styling */
+.wrapper.spotlight.style1 {
+    background-color: var(--light-blue) !important;
+}
+
+.wrapper.spotlight.style2 {
+    background-color: var(--primary-blue) !important;
+}
+
+.wrapper.spotlight.style3 {
+    background-color: var(--dark-blue) !important;
+}
+
+.wrapper.alt.style1 {
+    background-color: var(--light-blue) !important;
+}
+
+/* Ensure all text in sections is readable */
+.wrapper.spotlight .content p,
+.wrapper.alt .inner > p {
+    color: var(--text-light) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Events section text */
+#four .inner > p {
+    color: var(--text-light) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-size: 1.1em !important;
+    line-height: 1.6 !important;
+    margin-bottom: 2em !important;
+}
+
+/* Section headers */
+.wrapper.spotlight .content h2.major {
+    color: var(--text-light) !important;
+    border-bottom: 2px solid var(--primary-red) !important;
+}
+
+.wrapper.alt.style1 h2.major {
+    color: var(--text-light) !important;
+    border-bottom: 2px solid var(--primary-red) !important;
+}
+
+/* Button styling */
+.button, input[type="submit"] {
+    background-color: var(--primary-red) !important;
+    border-color: var(--primary-red) !important;
+    color: var(--text-light) !important;
+    transition: all 0.3s ease !important;
+}
+
+.button:hover, input[type="submit"]:hover {
+    background-color: var(--accent-red) !important;
+    border-color: var(--accent-red) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(211, 47, 47, 0.3) !important;
+}
+
+/* Feature cards */
+.features article {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border: 2px solid var(--primary-blue) !important;
+    transition: all 0.3s ease !important;
+}
+
+.features article:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 8px 16px rgba(26, 35, 126, 0.2) !important;
+    border-color: var(--primary-red) !important;
+}
+
+.features article h3.major {
+    color: var(--text-dark) !important;
+}
+
+.features article p {
+    color: var(--text-dark) !important;
+    font-weight: 500 !important;
+}
+
+.features article .special {
+    color: var(--primary-red) !important;
+    border-color: var(--primary-red) !important;
+}
+
+.features article .special:hover {
+    background-color: var(--primary-red) !important;
+    color: var(--text-light) !important;
+}
+
+/* Footer styling */
+#footer {
+    background-color: var(--primary-blue) !important;
+    border-top: 3px solid var(--primary-red) !important;
+}
+
+#footer h2.major {
+    color: var(--text-light) !important;
+    border-bottom: 2px solid var(--primary-red) !important;
+}
+
+#footer p {
+    color: var(--text-light) !important;
+}
+
+/* Form styling */
+#footer input[type="text"],
+#footer input[type="email"],
+#footer textarea {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border: 2px solid var(--light-blue) !important;
+    color: var(--text-dark) !important;
+}
+
+#footer input[type="text"]:focus,
+#footer input[type="email"]:focus,
+#footer textarea:focus {
+    border-color: var(--primary-red) !important;
+    box-shadow: 0 0 8px rgba(211, 47, 47, 0.3) !important;
+}
+
+#footer label {
+    color: var(--text-light) !important;
+}
+
+/* Contact information */
+#footer .contact li {
+    color: var(--text-light) !important;
+}
+
+#footer .contact li a {
+    color: var(--accent-red) !important;
+}
+
+#footer .contact li a:hover {
+    color: var(--text-light) !important;
+}
+
+/* Copyright */
+#footer .copyright {
+    color: rgba(255, 255, 255, 0.7) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+#footer .copyright a {
+    color: var(--accent-red) !important;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1280px) {
+    #banner {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 50%, var(--primary-blue) 100%) !important;
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #banner .logo .logo-image {
+        max-width: 150px;
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #banner .logo .logo-image {
+        max-width: 120px;
+    }
+    
+    #banner h2 {
+        font-size: 1.5em !important;
+    }
+    
+    #banner p {
+        font-size: 0.8em !important;
+    }
+}
+
+/* Smooth transitions for all elements */
+* {
+    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Additional text readability improvements */
+.wrapper.spotlight .content h2.major,
+.wrapper.alt.style1 h2.major {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Ensure form labels are readable */
+#footer label {
+    color: var(--text-light) !important;
+    font-weight: 600 !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Improve button text readability */
+.button, input[type="submit"] {
+    font-weight: 600 !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Article page styling */
+.article-header {
+    margin-bottom: 3em;
+    padding-bottom: 2em;
+    border-bottom: 2px solid var(--primary-red);
+}
+
+.article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    margin-top: 1em;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    color: var(--text-light);
+    font-size: 1.1em;
+}
+
+.meta-item .icon {
+    color: var(--primary-red);
+    font-size: 1.2em;
+}
+
+.article-section {
+    margin-bottom: 3em;
+    padding: 2em;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-red);
+}
+
+.section-title {
+    color: var(--primary-red) !important;
+    margin-bottom: 1em !important;
+    font-size: 1.5em !important;
+    border-bottom: 2px solid var(--primary-red) !important;
+    padding-bottom: 0.5em !important;
+}
+
+.section-content {
+    color: var(--text-light) !important;
+    line-height: 1.8 !important;
+    font-size: 1.1em !important;
+}
+
+.section-content ul {
+    margin: 1em 0;
+    padding-left: 2em;
+}
+
+.section-content li {
+    margin-bottom: 0.5em;
+}
+
+.article-footer {
+    margin-top: 4em;
+    padding-top: 3em;
+    border-top: 2px solid var(--primary-red);
+}
+
+.tags {
+    margin-bottom: 2em;
+}
+
+.tag {
+    display: inline-block;
+    background: var(--primary-red);
+    color: var(--text-light);
+    padding: 0.5em 1em;
+    margin: 0.25em;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.contact-info {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2em;
+    border-radius: 8px;
+    margin-bottom: 2em;
+}
+
+.contact-info h3 {
+    color: var(--primary-red) !important;
+    margin-bottom: 1em !important;
+}
+
+.contact-info a {
+    color: var(--accent-red) !important;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    color: var(--text-light) !important;
+}
+
+.article-footer .actions {
+    text-align: center;
+    margin-top: 2em;
+}
+
+.article-footer .actions .button {
+    margin: 0 1em;
+}
+
+.error-message {
+    background: rgba(244, 67, 54, 0.1);
+    border: 2px solid var(--accent-red);
+    border-radius: 8px;
+    padding: 2em;
+    text-align: center;
+}
+
+.error-message ul {
+    text-align: left;
+    display: inline-block;
+    margin: 1em 0;
+}
+
+.error-message a {
+    color: var(--accent-red) !important;
+    text-decoration: none;
+}
+
+.error-message a:hover {
+    color: var(--text-light) !important;
+}
+
+/* Responsive adjustments for articles */
+@media screen and (max-width: 736px) {
+    .article-meta {
+        flex-direction: column;
+        gap: 1em;
+    }
+    
+    .article-section {
+        padding: 1.5em;
+        margin-bottom: 2em;
+    }
+    
+    .section-title {
+        font-size: 1.3em !important;
+    }
+    
+    .section-content {
+        font-size: 1em !important;
+    }
+}

@@ -1,0 +1,247 @@
+{
+  "site": {
+    "title": "Surrey Students' Law Society",
+    "tagline": "Empowering Future Legal Professionals",
+    "description": "A lively community of law students committed to promoting legal knowledge, professional growth, and networking opportunities."
+  },
+  "header": {
+    "title": "Surrey Students' Law Society",
+    "menu": {
+      "home": "Home",
+      "about": "About",
+      "contact": "Get in Touch"
+    }
+  },
+  "banner": {
+    "title": "Surrey Students' Law Society",
+    "subtitle": "Empowering Future Legal Professionals",
+    "logo": {
+      "src": "images/Logo-no-bg.PNG",
+      "alt": "Surrey Students' Law Society Logo"
+    }
+  },
+  "sections": {
+    "about": {
+      "title": "About Our Society",
+      "content": "The Surrey Students' Law Society is a lively community of law students committed to promoting legal knowledge, professional growth, and networking opportunities. We offer a platform for students to connect with legal professionals, take part in moot court competitions, and build essential skills for their future careers in law.",
+      "image": {
+        "src": "images/pic01.jpg",
+        "alt": "Law Society Meeting"
+      }
+    },
+    "offerings": {
+      "title": "What We Offer",
+      "content": "Our society organises regular workshops, guest lectures by legal professionals, networking events, and social activities. We also offer opportunities for students to take part in national and international legal competitions, helping them gain practical experience and professional connections.",
+      "image": {
+        "src": "images/pic02.jpg",
+        "alt": "Legal Education"
+      }
+    },
+    "community": {
+      "title": "Join Our Community",
+      "content": "Whether you're a first-year law student or in your final year, there's a place for you in our society. We welcome students from all backgrounds and experience levels. Join us to maximise your legal education and forge lasting friendships with fellow aspiring lawyers.",
+      "image": {
+        "src": "images/pic03.jpg",
+        "alt": "Student Community"
+      }
+    },
+    "events": {
+      "title": "Upcoming Events",
+      "description": "Stay informed about our latest events, workshops, and activities. Follow us on social media and check back often for updates on what's happening within our law society community.",
+      "items": [
+        {
+          "title": "Legal Writing Workshop",
+          "description": "Enhance your legal writing abilities with our expert-led workshop series.",
+          "image": {
+            "src": "images/pic04.jpg",
+            "alt": "Workshop"
+          },
+          "link": "articles/legal-writing-workshop.html",
+          "article": {
+            "fullTitle": "Legal Writing Workshop Series",
+            "date": "September 15-30, 2024",
+            "location": "University of Surrey, Law Building",
+            "duration": "2 weeks",
+            "instructor": "Prof. Sarah Mitchell, QC",
+            "content": [
+              {
+                "section": "Overview",
+                "text": "Our comprehensive legal writing workshop series is designed to transform your legal writing skills from basic to professional level. Whether you're a first-year student or preparing for your final year, this workshop will provide you with the essential tools and techniques needed for effective legal communication."
+              },
+              {
+                "section": "What You'll Learn",
+                "text": "• Legal memorandum writing and structure\n• Case brief analysis and presentation\n• Contract drafting fundamentals\n• Legal research methodology\n• Citation and referencing standards\n• Professional legal correspondence"
+              },
+              {
+                "section": "Workshop Schedule",
+                "text": "Week 1: Foundations of Legal Writing\n• Day 1-2: Legal writing principles and structure\n• Day 3-4: Research methods and case analysis\n• Day 5: Practice session and feedback\n\nWeek 2: Advanced Applications\n• Day 1-2: Contract drafting and negotiation\n• Day 3-4: Legal memorandum writing\n• Day 5: Final project and certification"
+              },
+              {
+                "section": "Benefits",
+                "text": "• Certificate of completion for your CV\n• Sample writing portfolio for job applications\n• Networking with legal professionals\n• Practical skills for moot court competitions\n• Enhanced academic performance"
+              },
+              {
+                "section": "Registration",
+                "text": "Limited to 25 students per session. Early registration recommended. Contact us for group discounts and payment plans."
+              }
+            ],
+            "contact": "workshops@surreylawsociety.ac.uk",
+            "tags": ["Workshop", "Legal Writing", "Professional Development"]
+          }
+        },
+        {
+          "title": "Networking Events",
+          "description": "Network with legal professionals and grow your professional connections.",
+          "image": {
+            "src": "images/pic05.jpg",
+            "alt": "Networking"
+          },
+          "link": "articles/networking-events.html",
+          "article": {
+            "fullTitle": "Professional Networking Series",
+            "date": "Monthly throughout academic year",
+            "location": "Various locations in Guildford and London",
+            "duration": "Evening events (6:00 PM - 9:00 PM)",
+            "organizer": "Surrey Law Society Networking Committee",
+            "content": [
+              {
+                "section": "About Our Networking Series",
+                "text": "Our monthly networking events bring together law students, practicing lawyers, judges, and legal professionals from various sectors. These events provide invaluable opportunities to build relationships, gain insights into different legal careers, and discover internship and job opportunities."
+              },
+              {
+                "section": "Upcoming Events",
+                "text": "September: 'Meet the Barristers' - Guildford Crown Court\nOctober: 'In-House Counsel Panel' - London Legal District\nNovember: 'International Law Perspectives' - University Campus\nDecember: 'Holiday Networking Mixer' - Guildford Town Centre"
+              },
+              {
+                "section": "Event Format",
+                "text": "• 6:00-6:30 PM: Registration and welcome drinks\n• 6:30-7:30 PM: Panel discussion or keynote speaker\n• 7:30-8:30 PM: Networking session with professionals\n• 8:30-9:00 PM: Informal conversations and follow-ups"
+              },
+              {
+                "section": "What to Expect",
+                "text": "• Professional dress code required\n• Business cards encouraged\n• Pre-event preparation materials provided\n• Post-event follow-up guidance\n• LinkedIn group access for continued networking"
+              },
+              {
+                "section": "Success Stories",
+                "text": "Previous attendees have secured:\n• Summer internships at top law firms\n• Mentorship opportunities with senior lawyers\n• Job offers upon graduation\n• Valuable career advice and guidance"
+              }
+            ],
+            "contact": "networking@surreylawsociety.ac.uk",
+            "tags": ["Networking", "Professional Development", "Career Opportunities"]
+          }
+        },
+        {
+          "title": "Moot Court Competition",
+          "description": "Join our annual moot court competition and demonstrate your advocacy skills.",
+          "image": {
+            "src": "images/pic06.jpg",
+            "alt": "Competition"
+          },
+          "link": "articles/moot-court-competition.html",
+          "article": {
+            "fullTitle": "Annual Moot Court Competition",
+            "date": "March 15-20, 2025",
+            "location": "University of Surrey, Moot Court Room",
+            "duration": "6 days",
+            "judges": "Senior Barristers and Judges",
+            "content": [
+              {
+                "section": "Competition Overview",
+                "text": "Our annual moot court competition is the highlight of the academic year, providing students with the opportunity to argue real legal cases before experienced judges and barristers. This prestigious event tests your advocacy skills, legal knowledge, and courtroom presence."
+              },
+              {
+                "section": "Competition Structure",
+                "text": "• Preliminary Rounds: March 15-17 (all participants)\n• Quarter Finals: March 18 (top 8 teams)\n• Semi Finals: March 19 (top 4 teams)\n• Grand Final: March 20 (championship match)"
+              },
+              {
+                "section": "Case Materials",
+                "text": "• Real appellate court cases\n• Comprehensive case bundles provided\n• 4 weeks preparation time\n• Access to law library resources\n• Mentoring from previous winners"
+              },
+              {
+                "section": "Prizes and Recognition",
+                "text": "• 1st Place: £500 cash prize + trophy\n• 2nd Place: £300 cash prize + certificate\n• 3rd Place: £200 cash prize + certificate\n• Best Speaker Award: £100 + special recognition\n• All finalists receive certificates for CVs"
+              },
+              {
+                "section": "Judging Criteria",
+                "text": "• Legal argument quality (40%)\n• Advocacy skills and presentation (30%)\n• Response to judicial questions (20%)\n• Professional conduct (10%)"
+              },
+              {
+                "section": "Registration",
+                "text": "Teams of 2-3 students. Registration opens January 15, 2025. Early registration recommended as spaces are limited."
+              }
+            ],
+            "contact": "mootcourt@surreylawsociety.ac.uk",
+            "tags": ["Competition", "Advocacy", "Courtroom Skills"]
+          }
+        },
+        {
+          "title": "Social Events",
+          "description": "Form friendships and partake in social activities with fellow law students.",
+          "image": {
+            "src": "images/pic07.jpg",
+            "alt": "Social"
+          },
+          "link": "articles/social-events.html",
+          "article": {
+            "fullTitle": "Social Events and Activities",
+            "date": "Throughout the academic year",
+            "location": "University campus and Guildford area",
+            "organizer": "Social Committee",
+            "content": [
+              {
+                "section": "Welcome Week Events",
+                "text": "Kick off the academic year with our exciting welcome week activities:\n• Freshers' Party at the Student Union\n• Campus tour and scavenger hunt\n• Meet and greet with society members\n• Pizza and movie night"
+              },
+              {
+                "section": "Regular Social Activities",
+                "text": "• Weekly coffee mornings in the law building\n• Monthly pub quizzes at local venues\n• Seasonal celebrations (Halloween, Christmas, Easter)\n• Sports events and team building activities\n• Cultural celebrations and international food nights"
+              },
+              {
+                "section": "Special Events",
+                "text": "• End of semester celebration dinners\n• Summer garden party\n• Charity fundraising events\n• Alumni networking socials\n• Inter-university law society competitions"
+              },
+              {
+                "section": "Benefits of Participation",
+                "text": "• Build lasting friendships with fellow students\n• Reduce stress and improve mental wellbeing\n• Develop teamwork and leadership skills\n• Create memories that last beyond university\n• Network in a relaxed, social environment"
+              },
+              {
+                "section": "Getting Involved",
+                "text": "• Join our social media groups for updates\n• Volunteer to help organize events\n• Suggest new activities and ideas\n• Attend our social committee meetings\n• Follow us on Instagram for event photos"
+              }
+            ],
+            "contact": "social@surreylawsociety.ac.uk",
+            "tags": ["Social", "Community", "Friendship"]
+          }
+        }
+      ],
+      "buttonText": "View All Events"
+    }
+  },
+  "contact": {
+    "title": "Get in touch",
+    "description": "Have questions about joining our society or want to learn more about our activities? We would love to hear from you! Fill out the form below or contact us through our social media channels. Xana",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send Message"
+    },
+    "info": {
+      "address": {
+        "organization": "Surrey Students' Law Society",
+        "institution": "University of Surrey",
+        "location": "Guildford, Surrey, UK"
+      },
+      "email": "lawsociety@surrey.ac.uk",
+      "social": {
+        "twitter": "@SurreyLawSoc",
+        "facebook": "facebook.com/SurreyLawSociety",
+        "instagram": "@xanasurreylawsociety",
+        "linkedin": "linkedin.com/company/surrey-law-society"
+      }
+    }
+  },
+  "footer": {
+    "copyright": "Surrey Students' Law Society. All rights reserved.",
+    "designCredit": "Design: HTML5 UP"
+  }
+}
