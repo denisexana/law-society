@@ -1,6 +1,6 @@
 # Surrey Students' Law Society Website
 
-A professional, responsive website for the Surrey Students' Law Society, built with HTML5 and CSS3. The website features a modern design with the society's logo prominently displayed and a custom color scheme matching the logo's dark blue and red theme.
+A professional, responsive website for the Surrey Students' Law Society, built with HTML5 and CSS3. The website features a modern design with the society's logo prominently displayed and a custom colour scheme matching the logo's dark blue and red theme.
 
 ## File Structure
 
@@ -8,11 +8,11 @@ A professional, responsive website for the Surrey Students' Law Society, built w
 law-society/
 ├── index.html              # Main website file
 ├── generic.html            # Convertor from JSON (config/content.json) to content
-├── content-editor.html     # Convertor from content to JSON
+├── content-editor.html     # Converter from content to JSON
 ├── assets/
 │   ├── css/
 │   │   ├── main.css        # Original template CSS
-│   │   ├── custom.css      # Custom color scheme and styling
+│   │   ├── custom.css      # Custom colour scheme and styling
 │   │   └── noscript.css    # No-script fallback styles
 │   ├── js/                 # JavaScript files
 │   ├── sass/               # SASS source files
@@ -24,9 +24,9 @@ law-society/
 └── README.md               # This file
 ```
 
-## Customizations Made
+## Customisations Made
 
-### Color Scheme
+### Colour Scheme
 - **Primary Blue**: #1a237e (Dark blue from logo)
 - **Primary Red**: #d32f2f (Red accent from logo)
 - **Dark Blue**: #0d47a1 (Darker shade for depth)
@@ -60,8 +60,8 @@ law-society/
 2. **Upload Your Files**:
    - Clone the repository to your local machine:
      ```bash
-     git clone https://github.com/yourusername/yourusername.github.io.git
-     cd yourusername.github.io
+     git clone https://github.com/denisexana/law-society.git
+     cd denisexana.law-society
      ```
    - Copy all website files to this directory
    - Commit and push:
@@ -94,7 +94,7 @@ law-society/
 
 ## Customization
 
-### Changing Colors
+### Changing Colours
 Edit `assets/css/custom.css` and modify the CSS variables at the top:
 
 ```css
