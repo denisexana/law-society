@@ -325,6 +325,54 @@
             <!-- About Section -->
             <div class="editor-section">
                 <h2>About Section</h2>
+                
+                <!-- Image Management for About Section -->
+                <div class="image-management" style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 6px; border: 1px solid #e9ecef;">
+                    <h5 style="color: #1a237e; margin-bottom: 10px;">About Section Image</h5>
+                    
+                    <!-- Current Image Display -->
+                    <div class="current-image" style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #555;">Current Image:</label>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img id="aboutCurrentImage" src="images/pic01_enhanced.jpg" alt="About Section" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #ddd;">
+                            <div>
+                                <div id="aboutImagePath" style="font-size: 12px; color: #666;">images/pic01_enhanced.jpg</div>
+                                <div id="aboutImageAlt" style="font-size: 12px; color: #666;">Alt: Law Society Meeting</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Upload Controls -->
+                    <div class="image-upload-controls">
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <label for="aboutImageFile">Upload New Image:</label>
+                            <input type="file" id="aboutImageFile" accept=".jpg,.jpeg,.png" onchange="handleSectionImageUpload('about', this)">
+                            <div style="font-size: 11px; color: #666; margin-top: 4px;">JPG/PNG only, max 5MB</div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <label for="aboutImageAlt">Image Alt Text:</label>
+                            <input type="text" id="aboutImageAlt" value="Law Society Meeting" onchange="updateSectionImage('about', 'alt', this.value)" placeholder="Describe the image for accessibility">
+                        </div>
+                        
+                        <div class="image-actions" style="display: flex; gap: 10px;">
+                            <button type="button" class="btn btn-secondary" onclick="resetSectionImage('about')" style="padding: 8px 15px; font-size: 14px;">Reset to Default</button>
+                            <button type="button" class="btn btn-secondary" onclick="removeSectionImage('about')" style="padding: 8px 15px; font-size: 14px; background: #dc3545;">Remove Image</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Preview (for newly uploaded images) -->
+                    <div id="aboutImagePreview" class="image-preview" style="display: none; margin-top: 15px; padding: 15px; background: #e8f5e8; border: 1px solid #28a745; border-radius: 4px;">
+                        <h6 style="color: #155724; margin-bottom: 10px;">New Image Preview:</h6>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img id="aboutPreviewImg" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #28a745;">
+                            <div>
+                                <div id="aboutPreviewInfo" style="font-size: 12px; color: #155724;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="form-group">
                     <label for="aboutTitle">Section Title</label>
                     <input type="text" id="aboutTitle" value="About Our Society" required>
@@ -338,6 +386,54 @@
             <!-- What We Offer Section -->
             <div class="editor-section">
                 <h2>What We Offer Section</h2>
+                
+                <!-- Image Management for Offerings Section -->
+                <div class="image-management" style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 6px; border: 1px solid #e9ecef;">
+                    <h5 style="color: #1a237e; margin-bottom: 10px;">Offerings Section Image</h5>
+                    
+                    <!-- Current Image Display -->
+                    <div class="current-image" style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #555;">Current Image:</label>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img id="offeringsCurrentImage" src="images/pic02_enhanced.jpg" alt="Offerings Section" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #ddd;">
+                            <div>
+                                <div id="offeringsImagePath" style="font-size: 12px; color: #666;">images/pic02_enhanced.jpg</div>
+                                <div id="offeringsImageAlt" style="font-size: 12px; color: #666;">Alt: Legal Education</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Upload Controls -->
+                    <div class="image-upload-controls">
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <label for="offeringsImageFile">Upload New Image:</label>
+                            <input type="file" id="offeringsImageFile" accept=".jpg,.jpeg,.png" onchange="handleSectionImageUpload('offerings', this)">
+                            <div style="font-size: 11px; color: #666; margin-top: 4px;">JPG/PNG only, max 5MB</div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <label for="offeringsImageAlt">Image Alt Text:</label>
+                            <input type="text" id="offeringsImageAlt" value="Legal Education" onchange="updateSectionImage('offerings', 'alt', this.value)" placeholder="Describe the image for accessibility">
+                        </div>
+                        
+                        <div class="image-actions" style="display: flex; gap: 10px;">
+                            <button type="button" class="btn btn-secondary" onclick="resetSectionImage('offerings')" style="padding: 8px 15px; font-size: 14px;">Reset to Default</button>
+                            <button type="button" class="btn btn-secondary" onclick="removeSectionImage('offerings')" style="padding: 8px 15px; font-size: 14px; background: #dc3545;">Remove Image</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Preview (for newly uploaded images) -->
+                    <div id="offeringsImagePreview" class="image-preview" style="display: none; margin-top: 15px; padding: 15px; background: #e8f5e8; border: 1px solid #28a745; border-radius: 4px;">
+                        <h6 style="color: #155724; margin-bottom: 10px;">New Image Preview:</h6>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img id="offeringsPreviewImg" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #28a745;">
+                            <div>
+                                <div id="offeringsPreviewInfo" style="font-size: 12px; color: #155724;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="form-group">
                     <label for="offeringsTitle">Section Title</label>
                     <input type="text" id="offeringsTitle" value="What We Offer" required>
@@ -351,6 +447,54 @@
             <!-- Community Section -->
             <div class="editor-section">
                 <h2>Join Our Community Section</h2>
+                
+                <!-- Image Management for Community Section -->
+                <div class="image-management" style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 6px; border: 1px solid #e9ecef;">
+                    <h5 style="color: #1a237e; margin-bottom: 10px;">Community Section Image</h5>
+                    
+                    <!-- Current Image Display -->
+                    <div class="current-image" style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #555;">Current Image:</label>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img id="communityCurrentImage" src="images/pic03_enhanced.jpg" alt="Community Section" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #ddd;">
+                            <div>
+                                <div id="communityImagePath" style="font-size: 12px; color: #666;">images/pic03_enhanced.jpg</div>
+                                <div id="communityImageAlt" style="font-size: 12px; color: #666;">Alt: Student Community</div>
+                            </div>
+                            </div>
+                    </div>
+                    
+                    <!-- Image Upload Controls -->
+                    <div class="image-upload-controls">
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <label for="communityImageFile">Upload New Image:</label>
+                            <input type="file" id="communityImageFile" accept=".jpg,.jpeg,.png" onchange="handleSectionImageUpload('community', this)">
+                            <div style="font-size: 11px; color: #666; margin-top: 4px;">JPG/PNG only, max 5MB</div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <label for="communityImageAlt">Image Alt Text:</label>
+                            <input type="text" id="communityImageAlt" value="Student Community" onchange="updateSectionImage('community', 'alt', this.value)" placeholder="Describe the image for accessibility">
+                        </div>
+                        
+                        <div class="image-actions" style="display: flex; gap: 10px;">
+                            <button type="button" class="btn btn-secondary" onclick="resetSectionImage('community')" style="padding: 8px 15px; font-size: 14px;">Reset to Default</button>
+                            <button type="button" class="btn btn-secondary" onclick="removeSectionImage('community')" style="padding: 8px 15px; font-size: 14px; background: #dc3545;">Remove Image</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Preview (for newly uploaded images) -->
+                    <div id="communityImagePreview" class="image-preview" style="display: none; margin-top: 15px; padding: 15px; background: #e8f5e8; border: 1px solid #28a745; border-radius: 4px;">
+                        <h6 style="color: #155724; margin-bottom: 10px;">New Image Preview:</h6>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img id="communityPreviewImg" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #28a745;">
+                            <div>
+                                <div id="communityPreviewInfo" style="font-size: 12px; color: #155724;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="form-group">
                     <label for="communityTitle">Section Title</label>
                     <input type="text" id="communityTitle" value="Join Our Community" required>
@@ -992,16 +1136,37 @@
                         if (existingContent.sections.about) {
                             document.getElementById('aboutTitle').value = existingContent.sections.about.title || '';
                             document.getElementById('aboutContent').value = existingContent.sections.about.content || '';
+                            // Load existing image data
+                            if (existingContent.sections.about.image) {
+                                document.getElementById('aboutImageAlt').value = existingContent.sections.about.image.alt || '';
+                                updateCurrentImageDisplay('about', existingContent.sections.about.image.src);
+                                updateSectionImageData('about', 'src', existingContent.sections.about.image.src);
+                                updateSectionImageData('about', 'alt', existingContent.sections.about.image.alt);
+                            }
                         }
                         
                         if (existingContent.sections.offerings) {
                             document.getElementById('offeringsTitle').value = existingContent.sections.offerings.title || '';
                             document.getElementById('offeringsContent').value = existingContent.sections.offerings.content || '';
+                            // Load existing image data
+                            if (existingContent.sections.offerings.image) {
+                                document.getElementById('offeringsImageAlt').value = existingContent.sections.offerings.image.alt || '';
+                                updateCurrentImageDisplay('offerings', existingContent.sections.offerings.image.src);
+                                updateSectionImageData('offerings', 'src', existingContent.sections.offerings.image.src);
+                                updateSectionImageData('offerings', 'alt', existingContent.sections.offerings.image.alt);
+                            }
                         }
                         
                         if (existingContent.sections.community) {
                             document.getElementById('communityTitle').value = existingContent.sections.community.title || '';
                             document.getElementById('communityContent').value = existingContent.sections.community.content || '';
+                            // Load existing image data
+                            if (existingContent.sections.community.image) {
+                                document.getElementById('communityImageAlt').value = existingContent.sections.community.image.alt || '';
+                                updateCurrentImageDisplay('community', existingContent.sections.community.image.src);
+                                updateSectionImageData('community', 'src', existingContent.sections.community.image.src);
+                                updateSectionImageData('community', 'alt', existingContent.sections.community.image.alt);
+                            }
                         }
                         
                         if (existingContent.sections.events) {
@@ -1118,24 +1283,24 @@
                         title: document.getElementById('aboutTitle').value,
                         content: document.getElementById('aboutContent').value,
                         image: {
-                            src: "images/pic01.jpg",
-                            alt: "Law Society Meeting"
+                            src: document.getElementById('aboutCurrentImage').src,
+                            alt: document.getElementById('aboutImageAlt').value
                         }
                     },
                     offerings: {
                         title: document.getElementById('offeringsTitle').value,
                         content: document.getElementById('offeringsContent').value,
                         image: {
-                            src: "images/pic02.jpg",
-                            alt: "Legal Education"
+                            src: document.getElementById('offeringsCurrentImage').src,
+                            alt: document.getElementById('offeringsImageAlt').value
                         }
                     },
                     community: {
                         title: document.getElementById('communityTitle').value,
                         content: document.getElementById('communityContent').value,
                         image: {
-                            src: "images/pic03.jpg",
-                            alt: "Student Community"
+                            src: document.getElementById('communityCurrentImage').src,
+                            alt: document.getElementById('communityImageAlt').value
                         }
                     },
                     events: {
@@ -1522,6 +1687,190 @@ your-website/
             }
         `;
         document.head.appendChild(style);
+
+        // Image management for sections
+        function handleSectionImageUpload(sectionType, fileInput) {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            // Validate file type
+            if (!file.type.match('image/(jpeg|jpg|png)')) {
+                alert('Please select a JPG or PNG image file.');
+                fileInput.value = '';
+                return;
+            }
+
+            // Validate file size (5MB max)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Image file size must be less than 5MB.');
+                fileInput.value = '';
+                return;
+            }
+
+            // Process the image
+            processImage(file, sectionType);
+        }
+
+        function processImage(file, sectionType) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    // Create canvas for image processing
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Set target dimensions (400x400 for circular image, matching the existing style)
+                    const targetSize = 400;
+                    const targetWidth = targetSize;
+                    const targetHeight = targetSize;
+                    
+                    // Calculate aspect ratio and cropping for square output
+                    const imgAspect = img.width / img.height;
+                    let sourceX = 0, sourceY = 0, sourceWidth = img.width, sourceHeight = img.height;
+                    
+                    if (imgAspect > 1) { // Image is wider than tall
+                        sourceWidth = img.height;
+                        sourceX = (img.width - sourceWidth) / 2;
+                    } else { // Image is taller than wide
+                        sourceHeight = img.width;
+                        sourceY = (img.height - sourceHeight) / 2;
+                    }
+                    
+                    // Set canvas dimensions
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
+                    
+                    // Draw and process image
+                    ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, targetWidth, targetHeight);
+                    
+                    // Convert to base64 with quality optimization
+                    const processedImageData = canvas.toDataURL('image/jpeg', 0.8);
+                    
+                    // Update section image data
+                    updateSectionImage(sectionType, 'src', processedImageData);
+                    updateSectionImage(sectionType, 'alt', `Section image for ${document.getElementById(`${sectionType}Title`).value}`);
+                    
+                    // Show preview
+                    showImagePreview(sectionType, processedImageData, file.name);
+                    
+                    // Update the current image display
+                    updateCurrentImageDisplay(sectionType, processedImageData);
+                    
+                    console.log(`✅ Image processed successfully for section ${sectionType}`);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function showImagePreview(sectionType, imageData, fileName) {
+            const previewDiv = document.getElementById(`${sectionType}ImagePreview`);
+            const previewImg = document.getElementById(`${sectionType}PreviewImg`);
+            const previewInfo = document.getElementById(`${sectionType}PreviewInfo`);
+            
+            previewImg.src = imageData;
+            previewInfo.innerHTML = `
+                <strong>File:</strong> ${fileName}<br>
+                <strong>Dimensions:</strong> ${previewImg.width} × ${previewImg.height} pixels<br>
+                <strong>Format:</strong> JPEG (optimized)<br>
+                <strong>Status:</strong> Ready to save
+            `;
+            previewDiv.style.display = 'block';
+        }
+
+        function updateCurrentImageDisplay(sectionType, imageData) {
+            const currentImage = document.getElementById(`${sectionType}CurrentImage`);
+            if (currentImage) {
+                currentImage.src = imageData;
+            }
+        }
+
+        function resetSectionImage(sectionType) {
+            const defaultImages = {
+                'about': 'images/pic01_enhanced.jpg',
+                'offerings': 'images/pic02_enhanced.jpg',
+                'community': 'images/pic03_enhanced.jpg'
+            };
+            const defaultImage = defaultImages[sectionType] || 'images/pic01_enhanced.jpg';
+            
+            updateSectionImage(sectionType, 'src', defaultImage);
+            updateSectionImage(sectionType, 'alt', `Default image for ${document.getElementById(`${sectionType}Title`).value}`);
+            
+            // Hide preview
+            const previewDiv = document.getElementById(`${sectionType}ImagePreview`);
+            if (previewDiv) {
+                previewDiv.style.display = 'none';
+            }
+            
+            // Update display
+            updateCurrentImageDisplay(sectionType, defaultImage);
+            
+            // Reset file input
+            const fileInput = document.getElementById(`${sectionType}ImageFile`);
+            if (fileInput) {
+                fileInput.value = '';
+            }
+            
+            console.log(`🔄 Image reset to default for section ${sectionType}`);
+        }
+
+        function removeSectionImage(sectionType) {
+            updateSectionImage(sectionType, 'src', 'images/pic01_enhanced.jpg'); // Default placeholder
+            updateSectionImage(sectionType, 'alt', 'Section placeholder image');
+            
+            // Hide preview
+            const previewDiv = document.getElementById(`${sectionType}ImagePreview`);
+            if (previewDiv) {
+                previewDiv.style.display = 'none';
+            }
+            
+            // Update display
+            updateCurrentImageDisplay(sectionType, 'images/pic01_enhanced.jpg'); // Default placeholder
+            
+            // Reset file input
+            const fileInput = document.getElementById(`${sectionType}ImageFile`);
+            if (fileInput) {
+                fileInput.value = '';
+            }
+            
+            console.log(`🗑️ Image removed for section ${sectionType}`);
+        }
+
+        function updateSectionImage(sectionType, field, value) {
+            const sectionImageElement = document.getElementById(`${sectionType}CurrentImage`);
+            if (sectionImageElement) {
+                sectionImageElement.src = value;
+            }
+            const sectionImagePathElement = document.getElementById(`${sectionType}ImagePath`);
+            if (sectionImagePathElement) {
+                sectionImagePathElement.textContent = value;
+            }
+            const sectionImageAltElement = document.getElementById(`${sectionType}ImageAlt`);
+            if (sectionImageAltElement) {
+                sectionImageAltElement.textContent = value;
+            }
+        }
+
+        function updateSectionImageData(sectionType, field, value) {
+            // Update the current image display
+            const currentImage = document.getElementById(`${sectionType}CurrentImage`);
+            if (currentImage && field === 'src') {
+                currentImage.src = value;
+            }
+            
+            // Update the image path display
+            const imagePathElement = document.getElementById(`${sectionType}ImagePath`);
+            if (imagePathElement && field === 'src') {
+                imagePathElement.textContent = value;
+            }
+            
+            // Update the alt text display
+            const imageAltElement = document.getElementById(`${sectionType}ImageAlt`);
+            if (imageAltElement && field === 'alt') {
+                imageAltElement.textContent = `Alt: ${value}`;
+            }
+        }
     </script>
 </body>
 </html>

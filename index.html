@@ -57,7 +57,7 @@
 						<!-- One -->
 							<section id="one" class="wrapper spotlight style1">
 								<div class="inner">
-									<a href="#" class="image"><img src="images/pic01_enhanced.jpg" alt="Law Society Meeting" /></a>
+									<a href="#" class="image"><img id="aboutImage" src="images/pic01_enhanced.jpg" alt="Law Society Meeting" /></a>
 									<div class="content">
 										<h2 class="major" id="aboutTitle">About Our Society</h2>
 										<p id="aboutContent">The Surrey Students' Law Society is a vibrant community of law students dedicated to fostering legal knowledge, professional development, and networking opportunities. We provide a platform for students to engage with legal professionals, participate in moot court competitions, and develop essential skills for their future careers in law.</p>
@@ -68,7 +68,7 @@
 						<!-- Two -->
 							<section id="two" class="wrapper alt spotlight style2">
 								<div class="inner">
-									<a href="#" class="image"><img src="images/pic02_enhanced.jpg" alt="Legal Education" /></a>
+									<a href="#" class="image"><img id="offeringsImage" src="images/pic02_enhanced.jpg" alt="Legal Education" /></a>
 									<div class="content">
 										<h2 class="major" id="offeringsTitle">What We Offer</h2>
 										<p id="offeringsContent">Our society organizes regular workshops, guest lectures from legal professionals, networking events, and social activities. We also provide opportunities for students to participate in national and international legal competitions, helping them build practical experience and professional connections.</p>
@@ -79,7 +79,7 @@
 						<!-- Three -->
 							<section id="three" class="wrapper spotlight style3">
 								<div class="inner">
-									<a href="#" class="image"><img src="images/pic03_enhanced.jpg" alt="Student Community" /></a>
+									<a href="#" class="image"><img id="communityImage" src="images/pic03_enhanced.jpg" alt="Student Community" /></a>
 									<div class="content">
 										<h2 class="major" id="communityTitle">Join Our Community</h2>
 										<p id="communityContent">Whether you're a first-year law student or in your final year, there's a place for you in our society. We welcome students from all backgrounds and experience levels. Join us to make the most of your legal education and build lasting friendships with fellow aspiring lawyers.</p>
@@ -187,16 +187,43 @@
 						if (content.sections.about) {
 							if (content.sections.about.title) document.getElementById('aboutTitle').textContent = content.sections.about.title;
 							if (content.sections.about.content) document.getElementById('aboutContent').textContent = content.sections.about.content;
+							
+							// Update about section image
+							if (content.sections.about.image) {
+								const aboutImg = document.getElementById('aboutImage');
+								if (aboutImg) {
+									aboutImg.src = content.sections.about.image.src;
+									aboutImg.alt = content.sections.about.image.alt || 'About Our Society';
+								}
+							}
 						}
 						
 						if (content.sections.offerings) {
 							if (content.sections.offerings.title) document.getElementById('offeringsTitle').textContent = content.sections.offerings.title;
 							if (content.sections.offerings.content) document.getElementById('offeringsContent').textContent = content.sections.offerings.content;
+							
+							// Update offerings section image
+							if (content.sections.offerings.image) {
+								const offeringsImg = document.getElementById('offeringsImage');
+								if (offeringsImg) {
+									offeringsImg.src = content.sections.offerings.image.src;
+									offeringsImg.alt = content.sections.offerings.image.alt || 'What We Offer';
+								}
+							}
 						}
 						
 						if (content.sections.community) {
 							if (content.sections.community.title) document.getElementById('communityTitle').textContent = content.sections.community.title;
 							if (content.sections.community.content) document.getElementById('communityContent').textContent = content.sections.community.content;
+							
+							// Update community section image
+							if (content.sections.community.image) {
+								const communityImg = document.getElementById('communityImage');
+								if (communityImg) {
+									communityImg.src = content.sections.community.image.src;
+									communityImg.alt = content.sections.community.image.alt || 'Join Our Community';
+								}
+							}
 						}
 						
 						if (content.sections.events) {
