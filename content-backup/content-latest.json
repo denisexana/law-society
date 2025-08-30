@@ -54,7 +54,7 @@
           "description": "Enhance your legal writing abilities with our expert-led workshop series.",
           "image": {
             "src": "images/pic04.jpg",
-            "alt": "Default image for Legal Writing Workshop"
+            "alt": "Workshop"
           },
           "link": "articles/legal-writing-workshop.html",
           "article": {
@@ -98,7 +98,7 @@
           "description": "Network with legal professionals and grow your professional connections.",
           "image": {
             "src": "images/pic05.jpg",
-            "alt": "Default image for Networking Events"
+            "alt": "Networking"
           },
           "link": "articles/networking-events.html",
           "article": {

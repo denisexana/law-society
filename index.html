@@ -46,8 +46,8 @@
 							<div class="logo">
 								<img src="images/Logo-no-bg.PNG" alt="Surrey Students' Law Society Logo" class="logo-image" />
 							</div>
-							<h2>Surrey Students' Law Society</h2>
-							<p>Empowering Future Legal Professionals</p>
+							<h2 id="bannerTitle">Surrey Students' Law Society</h2>
+							<p id="bannerSubtitle">Empowering Future Legal Professionals</p>
 						</div>
 					</section>
 
@@ -59,8 +59,8 @@
 								<div class="inner">
 									<a href="#" class="image"><img src="images/pic01_enhanced.jpg" alt="Law Society Meeting" /></a>
 									<div class="content">
-										<h2 class="major">About Our Society</h2>
-										<p>The Surrey Students' Law Society is a vibrant community of law students dedicated to fostering legal knowledge, professional development, and networking opportunities. We provide a platform for students to engage with legal professionals, participate in moot court competitions, and develop essential skills for their future careers in law.</p>
+										<h2 class="major" id="aboutTitle">About Our Society</h2>
+										<p id="aboutContent">The Surrey Students' Law Society is a vibrant community of law students dedicated to fostering legal knowledge, professional development, and networking opportunities. We provide a platform for students to engage with legal professionals, participate in moot court competitions, and develop essential skills for their future careers in law.</p>
 									</div>
 								</div>
 							</section>
@@ -70,8 +70,8 @@
 								<div class="inner">
 									<a href="#" class="image"><img src="images/pic02_enhanced.jpg" alt="Legal Education" /></a>
 									<div class="content">
-										<h2 class="major">What We Offer</h2>
-										<p>Our society organizes regular workshops, guest lectures from legal professionals, networking events, and social activities. We also provide opportunities for students to participate in national and international legal competitions, helping them build practical experience and professional connections.</p>
+										<h2 class="major" id="offeringsTitle">What We Offer</h2>
+										<p id="offeringsContent">Our society organizes regular workshops, guest lectures from legal professionals, networking events, and social activities. We also provide opportunities for students to participate in national and international legal competitions, helping them build practical experience and professional connections.</p>
 									</div>
 								</div>
 							</section>
@@ -81,8 +81,8 @@
 								<div class="inner">
 									<a href="#" class="image"><img src="images/pic03_enhanced.jpg" alt="Student Community" /></a>
 									<div class="content">
-										<h2 class="major">Join Our Community</h2>
-										<p>Whether you're a first-year law student or in your final year, there's a place for you in our society. We welcome students from all backgrounds and experience levels. Join us to make the most of your legal education and build lasting friendships with fellow aspiring lawyers.</p>
+										<h2 class="major" id="communityTitle">Join Our Community</h2>
+										<p id="communityContent">Whether you're a first-year law student or in your final year, there's a place for you in our society. We welcome students from all backgrounds and experience levels. Join us to make the most of your legal education and build lasting friendships with fellow aspiring lawyers.</p>
 									</div>
 								</div>
 							</section>
@@ -90,33 +90,10 @@
 						<!-- Four -->
 							<section id="four" class="wrapper alt style1">
 								<div class="inner">
-									<h2 class="major">Upcoming Events</h2>
-									<p>Stay updated with our latest events, workshops, and activities. Follow us on social media and check back regularly for updates on what's happening in our law society community.</p>
-									<section class="features">
-										<article>
-											<a href="#" class="image"><img src="images/pic04.jpg" alt="Workshop" /></a>
-											<h3 class="major">Legal Writing Workshop</h3>
-											<p>Improve your legal writing skills with our expert-led workshop series.</p>
-											<a href="articles/article-template.html?article=legal-writing-workshop" class="special">Learn more</a>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic05.jpg" alt="Networking" /></a>
-											<h3 class="major">Networking Events</h3>
-											<p>Connect with legal professionals and expand your professional network.</p>
-											<a href="articles/article-template.html?article=networking-events" class="special">Learn more</a>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic06.jpg" alt="Competition" /></a>
-											<h3 class="major">Moot Court Competition</h3>
-											<p>Participate in our annual moot court competition and showcase your advocacy skills.</p>
-											<a href="articles/article-template.html?article=moot-court-competition" class="special">Learn more</a>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic07.jpg" alt="Social" /></a>
-											<h3 class="major">Social Events</h3>
-											<p>Build friendships and enjoy social activities with fellow law students.</p>
-											<a href="articles/article-template.html?article=social-events" class="special">Learn more</a>
-										</article>
+									<h2 class="major" id="eventsTitle">Upcoming Events</h2>
+									<p id="eventsDescription">Stay updated with our latest events, workshops, and activities. Follow us on social media and check back regularly for updates on what's happening in our law society community.</p>
+									<section class="features" id="eventsContainer">
+										<!-- Events will be dynamically loaded here -->
 									</section>
 									<ul class="actions">
 										<li><a href="#" class="button">View All Events</a></li>
@@ -129,8 +106,8 @@
 				<!-- Footer -->
 					<section id="footer">
 						<div class="inner">
-							<h2 class="major">Get in touch</h2>
-							<p>Have questions about joining our society or want to learn more about our activities? We'd love to hear from you! Fill out the form below or reach out to us through our social media channels.</p>
+							<h2 class="major" id="contactTitle">Get in touch</h2>
+							<p id="contactDescription">Have questions about joining our society or want to learn more about our activities? We'd love to hear from you! Fill out the form below or reach out to us through our social media channels.</p>
 							<form method="POST" action="https://formspree.io/f/YOUR_FORM_ID_HERE">
 								<div class="fields">
 									<div class="field">
@@ -152,18 +129,18 @@
 							</form>
 							<ul class="contact">
 								<li class="icon solid fa-home">
-									Surrey Students' Law Society<br />
-									University of Surrey<br />
-									Guildford, Surrey, UK
+									<span id="orgName">Surrey Students' Law Society</span><br />
+									<span id="institution">University of Surrey</span><br />
+									<span id="location">Guildford, Surrey, UK</span>
 								</li>
-								<li class="icon solid fa-envelope"><a href="mailto:lawsociety@surrey.ac.uk">lawsociety@surrey.ac.uk</a></li>
-								<li class="icon brands fa-twitter"><a href="#">@SurreyLawSoc</a></li>
-								<li class="icon brands fa-facebook-f"><a href="#">facebook.com/SurreyLawSociety</a></li>
-								<li class="icon brands fa-instagram"><a href="#">@surreylawsociety</a></li>
-								<li class="icon brands fa-linkedin"><a href="#">linkedin.com/company/surrey-law-society</a></li>
+								<li class="icon solid fa-envelope"><a href="mailto:lawsociety@surrey.ac.uk" id="contactEmail">lawsociety@surrey.ac.uk</a></li>
+								<li class="icon brands fa-twitter"><a href="#" id="twitter">@SurreyLawSoc</a></li>
+								<li class="icon brands fa-facebook-f"><a href="#" id="facebook">facebook.com/SurreyLawSociety</a></li>
+								<li class="icon brands fa-instagram"><a href="#" id="instagram">@surreylawsociety</a></li>
+								<li class="icon brands fa-linkedin"><a href="#" id="linkedin">linkedin.com/company/surrey-law-society</a></li>
 							</ul>
 							<ul class="copyright">
-								<li>&copy; Surrey Students' Law Society. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+								<li>&copy; <span id="copyrightText">Surrey Students' Law Society</span>. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 							</ul>
 						</div>
 					</section>
@@ -177,6 +154,131 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+		
+		<!-- Content Loader Script -->
+		<script>
+			// Content loader for dynamic content from config/content.json
+			document.addEventListener('DOMContentLoaded', function() {
+				loadContent();
+			});
+
+			async function loadContent() {
+				try {
+					const response = await fetch('config/content.json');
+					if (!response.ok) {
+						throw new Error('Failed to load content.json');
+					}
+					
+					const content = await response.json();
+					
+					// Update site title
+					if (content.site) {
+						document.title = content.site.title || 'Surrey Students\' Law Society';
+					}
+					
+					// Update banner
+					if (content.banner) {
+						if (content.banner.title) document.getElementById('bannerTitle').textContent = content.banner.title;
+						if (content.banner.subtitle) document.getElementById('bannerSubtitle').textContent = content.banner.subtitle;
+					}
+					
+					// Update sections
+					if (content.sections) {
+						if (content.sections.about) {
+							if (content.sections.about.title) document.getElementById('aboutTitle').textContent = content.sections.about.title;
+							if (content.sections.about.content) document.getElementById('aboutContent').textContent = content.sections.about.content;
+						}
+						
+						if (content.sections.offerings) {
+							if (content.sections.offerings.title) document.getElementById('offeringsTitle').textContent = content.sections.offerings.title;
+							if (content.sections.offerings.content) document.getElementById('offeringsContent').textContent = content.sections.offerings.content;
+						}
+						
+						if (content.sections.community) {
+							if (content.sections.community.title) document.getElementById('communityTitle').textContent = content.sections.community.title;
+							if (content.sections.community.content) document.getElementById('communityContent').textContent = content.sections.community.content;
+						}
+						
+						if (content.sections.events) {
+							if (content.sections.events.title) document.getElementById('eventsTitle').textContent = content.sections.events.title;
+							if (content.sections.events.description) document.getElementById('eventsDescription').textContent = content.sections.events.description;
+							
+							// Load events dynamically
+							if (content.sections.events.items && content.sections.events.items.length > 0) {
+								loadEvents(content.sections.events.items);
+							}
+						}
+					}
+					
+					// Update contact information
+					if (content.contact) {
+						if (content.contact.title) document.getElementById('contactTitle').textContent = content.contact.title;
+						if (content.contact.description) document.getElementById('contactDescription').textContent = content.contact.description;
+						
+						if (content.contact.info) {
+							if (content.contact.info.address) {
+								if (content.contact.info.address.organization) document.getElementById('orgName').textContent = content.contact.info.address.organization;
+								if (content.contact.info.address.institution) document.getElementById('institution').textContent = content.contact.info.address.institution;
+								if (content.contact.info.address.location) document.getElementById('location').textContent = content.contact.info.address.location;
+							}
+							if (content.contact.info.email) {
+								const emailElement = document.getElementById('contactEmail');
+								emailElement.textContent = content.contact.info.email;
+								emailElement.href = `mailto:${content.contact.info.email}`;
+							}
+							
+							if (content.contact.info.social) {
+								if (content.contact.info.social.twitter) document.getElementById('twitter').textContent = content.contact.info.social.twitter;
+								if (content.contact.info.social.facebook) document.getElementById('facebook').textContent = content.contact.info.social.facebook;
+								if (content.contact.info.social.instagram) document.getElementById('instagram').textContent = content.contact.info.social.instagram;
+								if (content.contact.info.social.linkedin) document.getElementById('linkedin').textContent = content.contact.info.social.linkedin;
+							}
+						}
+					}
+					
+					// Update footer
+					if (content.footer) {
+						if (content.footer.copyright) document.getElementById('copyrightText').textContent = content.footer.copyright;
+					}
+					
+					console.log('✅ Content loaded successfully from config/content.json');
+					
+				} catch (error) {
+					console.error('❌ Error loading content:', error);
+					// Fallback to default content if loading fails
+					loadDefaultContent();
+				}
+			}
+
+			function loadEvents(events) {
+				const container = document.getElementById('eventsContainer');
+				container.innerHTML = '';
+				
+				events.forEach(event => {
+					const article = document.createElement('article');
+					
+					// Handle image source - check if it's base64 data or file path
+					let imageSrc = event.image?.src || 'images/pic04.jpg';
+					let imageAlt = event.image?.alt || 'Event image';
+					
+					article.innerHTML = `
+						<a href="#" class="image">
+							<img src="${imageSrc}" alt="${imageAlt}" />
+						</a>
+						<h3 class="major">${event.title || 'Event Title'}</h3>
+						<p>${event.description || 'Event description...'}</p>
+						<a href="${event.link || '#'}" class="special">Learn more</a>
+					`;
+					
+					container.appendChild(article);
+				});
+			}
+
+			function loadDefaultContent() {
+				console.log('ℹ️ Loading default content as fallback');
+				// Default content is already in the HTML, so no action needed
+			}
+		</script>
 
 	</body>
 </html>

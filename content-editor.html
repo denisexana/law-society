@@ -141,6 +141,45 @@
             background: #555;
         }
 
+        /* Image management styling */
+        .image-management {
+            transition: all 0.3s ease;
+        }
+
+        .image-management:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .image-preview {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .current-image img {
+            transition: transform 0.2s ease;
+        }
+
+        .current-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .image-upload-controls input[type="file"] {
+            padding: 8px;
+            border: 2px dashed #ddd;
+            border-radius: 4px;
+            background: #fafafa;
+            cursor: pointer;
+        }
+
+        .image-upload-controls input[type="file"]:hover {
+            border-color: #1a237e;
+            background: #f0f0f0;
+        }
+
         /* Special styling for the backup button in JSON section */
         .preview-section .actions .btn:nth-child(3) {
             background: #ff9800 !important;
@@ -337,6 +376,10 @@
                 <h3 style="margin: 20px 0 15px 0; color: #1a237e;">Event Items</h3>
                 <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px; padding: 15px; margin-bottom: 20px;">
                     <strong>⚠️ Important:</strong> The "Event Link" field must contain the correct article path (e.g., "articles/legal-writing-workshop.html") for the "LEARN MORE" buttons to work properly. Do not change these links unless you're creating new articles.
+                </div>
+                
+                <div style="background: #e8f4fd; border: 1px solid #1a237e; border-radius: 4px; padding: 15px; margin-bottom: 20px;">
+                    <strong>🖼️ Image Management:</strong> You can now upload custom images for each event! Images are automatically processed to fit the event card dimensions (412×240 pixels), cropped to maintain aspect ratio, and optimized for web use. Uploaded images are stored as base64 data in the JSON content.
                 </div>
                 <div class="events-grid" id="eventsGrid">
                     <!-- Event items will be populated here -->
@@ -662,6 +705,54 @@
                 eventDiv.className = 'event-item';
                 eventDiv.innerHTML = `
                     <h4>Event ${index + 1}</h4>
+                    
+                    <!-- Image Management Section -->
+                    <div class="image-management" style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 6px; border: 1px solid #e9ecef;">
+                        <h5 style="color: #1a237e; margin-bottom: 10px;">Event Image</h5>
+                        
+                        <!-- Current Image Display -->
+                        <div class="current-image" style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #555;">Current Image:</label>
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <img src="${event.image.src}" alt="${event.image.alt}" style="width: 100px; height: 60px; object-fit: cover; border-radius: 4px; border: 2px solid #ddd;">
+                                <div>
+                                    <div style="font-size: 12px; color: #666;">${event.image.src}</div>
+                                    <div style="font-size: 12px; color: #666;">Alt: ${event.image.alt}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Image Upload Controls -->
+                        <div class="image-upload-controls">
+                            <div class="form-group" style="margin-bottom: 10px;">
+                                <label for="imageFile_${index}">Upload New Image:</label>
+                                <input type="file" id="imageFile_${index}" accept=".jpg,.jpeg,.png" onchange="handleImageUpload(${index}, this)">
+                                <div style="font-size: 11px; color: #666; margin-top: 4px;">JPG/PNG only, max 5MB</div>
+                            </div>
+                            
+                            <div class="form-group" style="margin-bottom: 10px;">
+                                <label for="imageAlt_${index}">Image Alt Text:</label>
+                                <input type="text" id="imageAlt_${index}" value="${event.image.alt}" onchange="updateEventImage(${index}, 'alt', this.value)" placeholder="Describe the image for accessibility">
+                            </div>
+                            
+                            <div class="image-actions" style="display: flex; gap: 10px;">
+                                <button type="button" class="btn btn-secondary" onclick="resetEventImage(${index})" style="padding: 8px 15px; font-size: 14px;">Reset to Default</button>
+                                <button type="button" class="btn btn-secondary" onclick="removeEventImage(${index})" style="padding: 8px 15px; font-size: 14px; background: #dc3545;">Remove Image</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Image Preview (for newly uploaded images) -->
+                        <div id="imagePreview_${index}" class="image-preview" style="display: none; margin-top: 15px; padding: 15px; background: #e8f5e8; border: 1px solid #28a745; border-radius: 4px;">
+                            <h6 style="color: #155724; margin-bottom: 10px;">New Image Preview:</h6>
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <img id="previewImg_${index}" style="width: 100px; height: 60px; object-fit: cover; border-radius: 4px; border: 2px solid #28a745;">
+                                <div>
+                                    <div id="previewInfo_${index}" style="font-size: 12px; color: #155724;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="form-group">
                         <label>Event Title</label>
                         <input type="text" value="${event.title}" onchange="updateEvent(${index}, 'title', this.value)">
@@ -690,14 +781,167 @@
             }
         }
 
+        // Update event image data
+        function updateEventImage(index, field, value) {
+            if (!events[index].image) {
+                events[index].image = {};
+            }
+            events[index].image[field] = value;
+        }
+
+        // Handle image upload for an event
+        function handleImageUpload(eventIndex, fileInput) {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            // Validate file type
+            if (!file.type.match('image/(jpeg|jpg|png)')) {
+                alert('Please select a JPG or PNG image file.');
+                fileInput.value = '';
+                return;
+            }
+
+            // Validate file size (5MB max)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Image file size must be less than 5MB.');
+                fileInput.value = '';
+                return;
+            }
+
+            // Process the image
+            processImage(file, eventIndex);
+        }
+
+        // Process uploaded image (crop, resize, optimize)
+        function processImage(file, eventIndex) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    // Create canvas for image processing
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Set target dimensions (matching the placeholder from screenshot)
+                    const targetWidth = 412;
+                    const targetHeight = 240;
+                    
+                    // Calculate aspect ratio and cropping
+                    const imgAspect = img.width / img.height;
+                    const targetAspect = targetWidth / targetHeight;
+                    
+                    let sourceX = 0, sourceY = 0, sourceWidth = img.width, sourceHeight = img.height;
+                    
+                    if (imgAspect > targetAspect) {
+                        // Image is wider than target - crop width
+                        sourceWidth = img.height * targetAspect;
+                        sourceX = (img.width - sourceWidth) / 2;
+                    } else {
+                        // Image is taller than target - crop height
+                        sourceHeight = img.width / targetAspect;
+                        sourceY = (img.height - sourceHeight) / 2;
+                    }
+                    
+                    // Set canvas dimensions
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
+                    
+                    // Draw and process image
+                    ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, targetWidth, targetHeight);
+                    
+                    // Convert to base64 with quality optimization
+                    const processedImageData = canvas.toDataURL('image/jpeg', 0.8);
+                    
+                    // Update event image data
+                    updateEventImage(eventIndex, 'src', processedImageData);
+                    updateEventImage(eventIndex, 'alt', `Event image for ${events[eventIndex].title}`);
+                    
+                    // Show preview
+                    showImagePreview(eventIndex, processedImageData, file.name);
+                    
+                    // Update the current image display
+                    updateCurrentImageDisplay(eventIndex, processedImageData);
+                    
+                    console.log(`✅ Image processed successfully for event ${eventIndex}`);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Show image preview
+        function showImagePreview(eventIndex, imageData, fileName) {
+            const previewDiv = document.getElementById(`imagePreview_${eventIndex}`);
+            const previewImg = document.getElementById(`previewImg_${eventIndex}`);
+            const previewInfo = document.getElementById(`previewInfo_${eventIndex}`);
+            
+            previewImg.src = imageData;
+            previewInfo.innerHTML = `
+                <strong>File:</strong> ${fileName}<br>
+                <strong>Dimensions:</strong> 412 × 240 pixels<br>
+                <strong>Format:</strong> JPEG (optimized)<br>
+                <strong>Status:</strong> Ready to save
+            `;
+            previewDiv.style.display = 'block';
+        }
+
+        // Update current image display
+        function updateCurrentImageDisplay(eventIndex, imageData) {
+            const currentImage = document.querySelector(`#eventsGrid .event-item:nth-child(${eventIndex + 1}) .current-image img`);
+            if (currentImage) {
+                currentImage.src = imageData;
+            }
+        }
+
+        // Reset event image to default
+        function resetEventImage(eventIndex) {
+            const defaultImages = ['images/pic04.jpg', 'images/pic05.jpg', 'images/pic06.jpg', 'images/pic07.jpg'];
+            const defaultImage = defaultImages[eventIndex] || 'images/pic04.jpg';
+            
+            updateEventImage(eventIndex, 'src', defaultImage);
+            updateEventImage(eventIndex, 'alt', `Default image for ${events[eventIndex].title}`);
+            
+            // Hide preview
+            document.getElementById(`imagePreview_${eventIndex}`).style.display = 'none';
+            
+            // Update display
+            updateCurrentImageDisplay(eventIndex, defaultImage);
+            
+            // Reset file input
+            document.getElementById(`imageFile_${eventIndex}`).value = '';
+            
+            console.log(`🔄 Image reset to default for event ${eventIndex}`);
+        }
+
+        // Remove event image (set to placeholder)
+        function removeEventImage(eventIndex) {
+            updateEventImage(eventIndex, 'src', 'images/pic04.jpg');
+            updateEventImage(eventIndex, 'alt', 'Event placeholder image');
+            
+            // Hide preview
+            document.getElementById(`imagePreview_${eventIndex}`).style.display = 'none';
+            
+            // Update display
+            updateCurrentImageDisplay(eventIndex, 'images/pic04.jpg');
+            
+            // Reset file input
+            document.getElementById(`imageFile_${eventIndex}`).value = '';
+            
+            console.log(`🗑️ Image removed for event ${eventIndex}`);
+        }
+
         // Add new event
         function addEvent() {
+            const newEventIndex = events.length;
+            const defaultImages = ['images/pic04.jpg', 'images/pic05.jpg', 'images/pic06.jpg', 'images/pic07.jpg'];
+            const defaultImage = defaultImages[newEventIndex] || 'images/pic04.jpg';
+            
             events.push({
                 title: "New Event",
                 description: "Event description...",
                 link: "articles/new-event.html",
                 image: {
-                    src: "images/pic04.jpg",
+                    src: defaultImage,
                     alt: "New Event"
                 },
                 article: {
