@@ -931,6 +931,14 @@
                 events[index].image = {};
             }
             events[index].image[field] = value;
+            
+            // Update the display elements if it's the src field
+            if (field === 'src') {
+                const currentImage = document.querySelector(`#eventsGrid .event-item:nth-child(${index + 1}) .current-image img`);
+                if (currentImage) {
+                    currentImage.src = value;
+                }
+            }
         }
 
         // Handle image upload for an event
@@ -952,12 +960,12 @@
                 return;
             }
 
-            // Process the image
-            processImage(file, eventIndex);
+            // Process the image using the event-specific function
+            processEventImage(file, eventIndex);
         }
 
-        // Process uploaded image (crop, resize, optimize)
-        function processImage(file, eventIndex) {
+        // Process uploaded image for events (crop, resize, optimize)
+        function processEventImage(file, eventIndex) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 const img = new Image();
@@ -1001,10 +1009,10 @@
                     updateEventImage(eventIndex, 'alt', `Event image for ${events[eventIndex].title}`);
                     
                     // Show preview
-                    showImagePreview(eventIndex, processedImageData, file.name);
+                    showEventImagePreview(eventIndex, processedImageData, file.name);
                     
                     // Update the current image display
-                    updateCurrentImageDisplay(eventIndex, processedImageData);
+                    updateEventCurrentImageDisplay(eventIndex, processedImageData);
                     
                     console.log(`✅ Image processed successfully for event ${eventIndex}`);
                 };
@@ -1013,25 +1021,107 @@
             reader.readAsDataURL(file);
         }
 
-        // Show image preview
-        function showImagePreview(eventIndex, imageData, fileName) {
+        // Process uploaded image for sections (crop, resize, optimize)
+        function processImage(file, sectionType) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    // Create canvas for image processing
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Set target dimensions (400x400 for circular image, matching the existing style)
+                    const targetSize = 400;
+                    const targetWidth = targetSize;
+                    const targetHeight = targetSize;
+                    
+                    // Calculate aspect ratio and cropping for square output
+                    const imgAspect = img.width / img.height;
+                    let sourceX = 0, sourceY = 0, sourceWidth = img.width, sourceHeight = img.height;
+                    
+                    if (imgAspect > 1) { // Image is wider than tall
+                        sourceWidth = img.height;
+                        sourceX = (img.width - sourceWidth) / 2;
+                    } else { // Image is taller than wide
+                        sourceHeight = img.width;
+                        sourceY = (img.height - sourceHeight) / 2;
+                    }
+                    
+                    // Set canvas dimensions
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
+                    
+                    // Draw and process image
+                    ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, targetWidth, targetHeight);
+                    
+                    // Convert to base64 with quality optimization
+                    const processedImageData = canvas.toDataURL('image/jpeg', 0.8);
+                    
+                    // Update section image data
+                    updateSectionImage(sectionType, 'src', processedImageData);
+                    updateSectionImage(sectionType, 'alt', `Section image for ${document.getElementById(`${sectionType}Title`).value}`);
+                    
+                    // Show preview
+                    showImagePreview(sectionType, processedImageData, file.name);
+                    
+                    // Update the current image display
+                    updateCurrentImageDisplay(sectionType, processedImageData);
+                    
+                    console.log(`✅ Image processed successfully for section ${sectionType}`);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Show image preview for events
+        function showEventImagePreview(eventIndex, imageData, fileName) {
             const previewDiv = document.getElementById(`imagePreview_${eventIndex}`);
             const previewImg = document.getElementById(`previewImg_${eventIndex}`);
             const previewInfo = document.getElementById(`previewInfo_${eventIndex}`);
             
-            previewImg.src = imageData;
-            previewInfo.innerHTML = `
-                <strong>File:</strong> ${fileName}<br>
-                <strong>Dimensions:</strong> 412 × 240 pixels<br>
-                <strong>Format:</strong> JPEG (optimized)<br>
-                <strong>Status:</strong> Ready to save
-            `;
-            previewDiv.style.display = 'block';
+            if (previewDiv && previewImg && previewInfo) {
+                previewImg.src = imageData;
+                previewInfo.innerHTML = `
+                    <strong>File:</strong> ${fileName}<br>
+                    <strong>Dimensions:</strong> 412 × 240 pixels<br>
+                    <strong>Format:</strong> JPEG (optimized)<br>
+                    <strong>Status:</strong> Ready to save
+                `;
+                previewDiv.style.display = 'block';
+            }
         }
 
-        // Update current image display
-        function updateCurrentImageDisplay(eventIndex, imageData) {
+        // Show image preview for sections
+        function showImagePreview(sectionType, imageData, fileName) {
+            const previewDiv = document.getElementById(`${sectionType}ImagePreview`);
+            const previewImg = document.getElementById(`${sectionType}PreviewImg`);
+            const previewInfo = document.getElementById(`${sectionType}PreviewInfo`);
+            
+            if (previewDiv && previewImg && previewInfo) {
+                previewImg.src = imageData;
+                previewInfo.innerHTML = `
+                    <strong>File:</strong> ${fileName}<br>
+                    <strong>Dimensions:</strong> 400 × 400 pixels<br>
+                    <strong>Format:</strong> JPEG (optimized)<br>
+                    <strong>Status:</strong> Ready to save
+                `;
+                previewDiv.style.display = 'block';
+            }
+        }
+
+        // Update current image display for events
+        function updateEventCurrentImageDisplay(eventIndex, imageData) {
             const currentImage = document.querySelector(`#eventsGrid .event-item:nth-child(${eventIndex + 1}) .current-image img`);
+            if (currentImage) {
+                currentImage.src = imageData;
+            }
+        }
+
+        // Update current image display for sections
+        function updateCurrentImageDisplay(sectionType, imageData) {
+            const currentImage = document.getElementById(`${sectionType}CurrentImage`);
             if (currentImage) {
                 currentImage.src = imageData;
             }
@@ -1046,13 +1136,19 @@
             updateEventImage(eventIndex, 'alt', `Default image for ${events[eventIndex].title}`);
             
             // Hide preview
-            document.getElementById(`imagePreview_${eventIndex}`).style.display = 'none';
+            const previewDiv = document.getElementById(`imagePreview_${eventIndex}`);
+            if (previewDiv) {
+                previewDiv.style.display = 'none';
+            }
             
             // Update display
-            updateCurrentImageDisplay(eventIndex, defaultImage);
+            updateEventCurrentImageDisplay(eventIndex, defaultImage);
             
             // Reset file input
-            document.getElementById(`imageFile_${eventIndex}`).value = '';
+            const fileInput = document.getElementById(`imageFile_${eventIndex}`);
+            if (fileInput) {
+                fileInput.value = '';
+            }
             
             console.log(`🔄 Image reset to default for event ${eventIndex}`);
         }
@@ -1063,13 +1159,19 @@
             updateEventImage(eventIndex, 'alt', 'Event placeholder image');
             
             // Hide preview
-            document.getElementById(`imagePreview_${eventIndex}`).style.display = 'none';
+            const previewDiv = document.getElementById(`imagePreview_${eventIndex}`);
+            if (previewDiv) {
+                previewDiv.style.display = 'none';
+            }
             
             // Update display
-            updateCurrentImageDisplay(eventIndex, 'images/pic04.jpg');
+            updateEventCurrentImageDisplay(eventIndex, 'images/pic04.jpg');
             
             // Reset file input
-            document.getElementById(`imageFile_${eventIndex}`).value = '';
+            const fileInput = document.getElementById(`imageFile_${eventIndex}`);
+            if (fileInput) {
+                fileInput.value = '';
+            }
             
             console.log(`🗑️ Image removed for event ${eventIndex}`);
         }
