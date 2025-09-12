@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<!--
+	All Events Page - Surrey Students' Law Society
+	Based on Solid State by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>All Events - Surrey Students' Law Society</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/custom.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header" class="alt">
+						<h1><a href="index.html">Surrey Students' Law Society</a></h1>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<div class="inner">
+							<h2>Menu</h2>
+							<ul class="links">
+								<li><a href="index.html#banner">Home</a></li>
+								<li><a href="index.html#one">About</a></li>
+								<li><a href="index.html#footer">Get in Touch</a></li>
+								<li><a href="index.html#four">Events</a></li>
+							</ul>
+							<a href="#" class="close">Close</a>
+						</div>
+					</nav>
+
+				<!-- Banner -->
+					<section id="banner">
+						<div class="inner">
+							<div class="logo">
+								<img src="images/Logo-no-bg.PNG" alt="Surrey Students' Law Society Logo" class="logo-image" />
+							</div>
+							<h2>All Events</h2>
+							<p>Discover all our upcoming events, workshops, and activities</p>
+						</div>
+					</section>
+
+				<!-- Wrapper -->
+					<section id="wrapper">
+						<!-- Events Overview -->
+						<section id="events-overview" class="wrapper style1">
+							<div class="inner">
+								<h2 class="major">Upcoming Events & Activities</h2>
+								<p>Stay informed about our latest events, workshops, and activities. Follow us on social media and check back often for updates on what's happening within our law society community.</p>
+								
+								<!-- Events Grid -->
+								<section class="features" id="allEventsContainer">
+									<!-- Events will be dynamically loaded here -->
+								</section>
+								
+								<!-- Back to Home -->
+								<div class="actions" style="text-align: center; margin-top: 3em;">
+									<a href="index.html" class="button">← Back to Home</a>
+									<a href="index.html#footer" class="button">Contact Us</a>
+								</div>
+							</div>
+						</section>
+					</section>
+
+				<!-- Footer -->
+					<section id="footer">
+						<div class="inner">
+							<h2 class="major">Get in touch</h2>
+							<p>Have questions about joining our society or want to learn more about our activities? We'd love to hear from you!</p>
+							<ul class="contact">
+								<li class="icon solid fa-home">
+									Surrey Students' Law Society<br />
+									University of Surrey<br />
+									Guildford, Surrey, UK
+								</li>
+								<li class="icon solid fa-envelope"><a href="mailto:lawsociety@surrey.ac.uk">lawsociety@surrey.ac.uk</a></li>
+								<li class="icon brands fa-twitter"><a href="#">@SurreyLawSoc</a></li>
+								<li class="icon brands fa-facebook-f"><a href="#">facebook.com/SurreyLawSociety</a></li>
+								<li class="icon brands fa-instagram"><a href="#">@surreylawsociety</a></li>
+								<li class="icon brands fa-linkedin"><a href="#">linkedin.com/company/surrey-law-society</a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; Surrey Students' Law Society. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+		
+		<!-- Content Loader Script -->
+		<script>
+			// Content loader for dynamic content from config/content.json
+			document.addEventListener('DOMContentLoaded', function() {
+				loadAllEvents();
+			});
+
+			async function loadAllEvents() {
+				try {
+					const response = await fetch('config/content.json');
+					if (!response.ok) {
+						throw new Error('Failed to load content.json');
+					}
+					
+					const content = await response.json();
+					
+					// Load all events
+					if (content.sections && content.sections.events && content.sections.events.items) {
+						loadEventsGrid(content.sections.events.items);
+					} else {
+						console.warn('No events data found in content.json');
+						loadDefaultEvents();
+					}
+					
+					console.log('✅ All events loaded successfully');
+					
+				} catch (error) {
+					console.error('❌ Error loading events:', error);
+					loadDefaultEvents();
+				}
+			}
+
+			function loadEventsGrid(events) {
+				const container = document.getElementById('allEventsContainer');
+				container.innerHTML = '';
+				
+				events.forEach((event, index) => {
+					const article = document.createElement('article');
+					
+					// Handle image source - check if it's base64 data or file path
+					let imageSrc = event.image?.src || 'images/pic04.jpg';
+					let imageAlt = event.image?.alt || 'Event image';
+					
+					// Create event card with enhanced styling
+					article.innerHTML = `
+						<a href="${event.link || '#'}" class="image">
+							<img src="${imageSrc}" alt="${imageAlt}" />
+						</a>
+						<h3 class="major">${event.title || 'Event Title'}</h3>
+						<p>${event.description || 'Event description...'}</p>
+						<a href="${event.link || '#'}" class="special">Learn more</a>
+					`;
+					
+					container.appendChild(article);
+				});
+			}
+
+			function loadDefaultEvents() {
+				console.log('ℹ️ Loading default events as fallback');
+				const container = document.getElementById('allEventsContainer');
+				container.innerHTML = `
+					<article>
+						<a href="#" class="image">
+							<img src="images/pic04.jpg" alt="Legal Writing Workshop" />
+						</a>
+						<h3 class="major">Legal Writing Workshop</h3>
+						<p>Enhance your legal writing abilities with our expert-led workshop series.</p>
+						<a href="articles/legal-writing-workshop.html" class="special">Learn more</a>
+					</article>
+					<article>
+						<a href="#" class="image">
+							<img src="images/pic05.jpg" alt="Networking Events" />
+						</a>
+						<h3 class="major">Networking Events</h3>
+						<p>Network with legal professionals and grow your professional connections.</p>
+						<a href="articles/networking-events.html" class="special">Learn more</a>
+					</article>
+					<article>
+						<a href="#" class="image">
+							<img src="images/pic06.jpg" alt="Moot Court Competition" />
+						</a>
+						<h3 class="major">Moot Court Competition</h3>
+						<p>Join our annual moot court competition and demonstrate your advocacy skills.</p>
+						<a href="articles/moot-court-competition.html" class="special">Learn more</a>
+					</article>
+					<article>
+						<a href="#" class="image">
+							<img src="images/pic07.jpg" alt="Social Events" />
+						</a>
+						<h3 class="major">Social Events</h3>
+						<p>Form friendships and partake in social activities with fellow law students.</p>
+						<a href="articles/social-events.html" class="special">Learn more</a>
+					</article>
+				`;
+			}
+		</script>
+
+	</body>
+</html>
